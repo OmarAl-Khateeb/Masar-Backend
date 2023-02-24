@@ -25,7 +25,6 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("CourseConnection"));
             });
-            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

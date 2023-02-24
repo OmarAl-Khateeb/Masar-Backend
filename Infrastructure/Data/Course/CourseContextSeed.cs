@@ -22,7 +22,7 @@ namespace Infrastructure.Data.Course
                 var mealPlan = new MealPlan
                 {
                     CaloriesTotal = 4000,
-                    AppUserId = 1,
+                    AppUserId = "1",
                     MealList = new List<Meal>()
                 };
                 mealPlan.MealList.Add(meala);

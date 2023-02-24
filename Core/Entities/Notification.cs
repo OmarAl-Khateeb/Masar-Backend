@@ -9,6 +9,6 @@ namespace Core.Entities
     {
         public string Name { get; set; }
         public string Details { get; set; }
-        public int clientId { get; set; }
+        public string AppUserId { get; set; }
     }
 }

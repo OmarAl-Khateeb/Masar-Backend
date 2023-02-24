@@ -12,7 +12,5 @@ namespace API.Dtos
         public string Description { get; set; }
         public int Calories { get; set; }
         public int Wieght { get; set; }
-        public int AppUserId { get; set; }
-        public int MealPLanId { get; set; }
     }
 }

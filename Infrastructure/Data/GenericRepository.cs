@@ -53,6 +53,14 @@ namespace Infrastructure.Data
         {
             return await ApplySpecification(spec).ToListAsync();
         }
+        
+
+        public async Task<IReadOnlyList<T>> ListTAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec)
+            .ToListAsync();
+        }
+
 
         public void Update(T entity)
         {

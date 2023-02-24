@@ -11,7 +11,7 @@ namespace Core.Entities.Meal
         public string Description { get; set; }
         public int Calories { get; set; }
         public int Wieght { get; set; }
-        public int AppUserId { get; set; }
-        public int MealPLanId { get; set; }
+        public string AppUserId { get; set; }
+        public int MealPlanId { get; set; }
     }
 }

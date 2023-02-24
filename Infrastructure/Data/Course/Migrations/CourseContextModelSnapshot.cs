@@ -23,8 +23,8 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Calories")
                         .HasColumnType("INTEGER");
@@ -35,7 +35,7 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MealPLanId")
+                    b.Property<int>("MealPlanId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -46,7 +46,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MealPLanId");
+                    b.HasIndex("MealPlanId");
 
                     b.ToTable("Meals");
                 });
@@ -57,8 +57,8 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CaloriesTotal")
                         .HasColumnType("INTEGER");
@@ -78,11 +78,11 @@ namespace Infrastructure.Data.Course.Migrations
                 {
                     b.HasOne("Core.Entities.Meal.MealPlan", null)
                         .WithMany("MealList")
-                        .HasForeignKey("MealPLanId")
+                        .HasForeignKey("MealPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-                
+
             modelBuilder.Entity("Core.Entities.Meal.MealPlan", b =>
                 {
                     b.Navigation("MealList");

@@ -22,8 +22,7 @@ namespace Infrastructure.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.FullName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

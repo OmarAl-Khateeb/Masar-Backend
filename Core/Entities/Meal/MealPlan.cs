@@ -7,9 +7,9 @@ namespace Core.Entities.Meal
 {
     public class MealPlan : BaseEntity
     {
-        public List<Meal> MealList { get; set; }
+        public List<Meal> MealList { get; set; } = new();
         public int Day { get; set; }
         public int CaloriesTotal { get; set; }
-        public int AppUserId { get; set; }
+        public string AppUserId { get; set; }
     }
 }
