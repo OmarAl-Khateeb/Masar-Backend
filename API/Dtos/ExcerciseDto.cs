@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Core.Entities.Excercise
+namespace API.Dtos
 {
-    public class Excercise : BaseEntity
+    public class ExcerciseDto
     {
         public string Name { get; set; }
         public string Details { get; set; }

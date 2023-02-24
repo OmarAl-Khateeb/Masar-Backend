@@ -13,13 +13,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class CourseController : BaseApiController
+    public class MealController : BaseApiController
     {
         private readonly IGenericRepository<MealPlan, CourseContext> _mealPlansRepo;
         private readonly IGenericRepository<Meal, CourseContext> _mealsRepo;
         private readonly IMapper _mapper;
         private readonly CourseContext _context;
-        public CourseController(CourseContext context, IGenericRepository<MealPlan, CourseContext> mealPlansRepo, IGenericRepository<Meal, CourseContext> mealsRepo, IMapper mapper)
+        public MealController(CourseContext context, IGenericRepository<MealPlan, CourseContext> mealPlansRepo, IGenericRepository<Meal, CourseContext> mealsRepo, IMapper mapper)
         {
             _context = context;
             _mealPlansRepo = mealPlansRepo;
@@ -40,28 +40,28 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<MealPlan>> CreateMealPlan(MealPlanDto mealPlanDto)
         {
-        var mealPlan = _mapper.Map<MealPlanDto, MealPlan>(mealPlanDto);
+            var mealPlan = _mapper.Map<MealPlanDto, MealPlan>(mealPlanDto);
 
-        // var spec = new MealPlanSpecification(mealPlan.AppUserId, mealPlan.Day);
+            // var spec = new MealPlanSpecification(mealPlan.AppUserId, mealPlan.Day);
 
-        // var planExist = await _mealPlansRepo.ListAsync(spec);
+            // var planExist = await _mealPlansRepo.ListAsync(spec);
 
-        // if (planExist != null) return NoContent(); //update method?
+            // if (planExist != null) return NoContent(); //update method?
 
-        foreach (var mealDto in mealPlanDto.MealList)
-        {
-            var meal = _mapper.Map<MealDto, Meal>(mealDto);
-            
-        }
+            foreach (var mealDto in mealPlanDto.MealList)
+            {
+                var meal = _mapper.Map<MealDto, Meal>(mealDto);
+                
+            }
 
-        mealPlan.MealList.ForEach(meal => meal.AppUserId = mealPlanDto.AppUserId);
-        _mealPlansRepo.Add(mealPlan);
+            mealPlan.MealList.ForEach(meal => meal.AppUserId = mealPlanDto.AppUserId);
+            _mealPlansRepo.Add(mealPlan);
 
-        var result = await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
 
-        if (result <= 0) return BadRequest("Failed to create meal plan");
+            if (result <= 0) return BadRequest("Failed to create meal plan");
 
-        return Ok(mealPlan);
+            return Ok(mealPlan);
         }
 
         

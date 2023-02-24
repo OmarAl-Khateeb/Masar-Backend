@@ -4,6 +4,7 @@ using Core.Entities;
 using API.Extensions;
 using Core.Entities.Identity;
 using Core.Entities.Meal;
+using Core.Entities.Excercise;
 
 namespace API.Helpers
 {
@@ -23,6 +24,16 @@ namespace API.Helpers
 
             CreateMap<MealPlanDto, MealPlan>()
                 .ForMember(dest => dest.MealList, opt => opt.MapFrom(src => src.MealList))
+                .ReverseMap();
+            
+            CreateMap<Excercise, ExcerciseDto>()
+                .ReverseMap();
+            
+            CreateMap<ExcerciseSet, ExcerciseSetDto>()
+                .ReverseMap();
+
+            CreateMap<ExcercisePlanDto, ExcercisePlan>()
+                .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist))
                 .ReverseMap();
                 
             CreateMap<AppUser, UserDto>()

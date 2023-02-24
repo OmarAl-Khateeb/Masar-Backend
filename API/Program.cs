@@ -49,7 +49,7 @@ try
     await course.Database.MigrateAsync();
     await identityContext.Database.MigrateAsync();
     await StoreContextSeed.SeedAsync(context);
-    await CourseContextSeed.SeedMealAsync(course);
+    await CourseContextSeed.SeedCourseAsync(course);
     await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)

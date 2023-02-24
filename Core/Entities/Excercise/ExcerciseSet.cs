@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Excercise
 {
-    public class ExcerciseSession : BaseEntity
+    public class ExcerciseSet : BaseEntity
     {
-        public int Day { get; set; }
-        public int SetNum { get; set; }
+        public int Reps { get; set; }
         public bool IsDone { get; set; }
         public int ExcerciseId { get; set; }
         public int ExcercisePlanId { get; set; }
