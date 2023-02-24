@@ -35,7 +35,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ExcerciseDto>>> GetExcercises()
         {
-            var spec = new ExcercisesSpecification();
+            var spec = new BaseSpecification<Excercise>();
 
             var excercises = await _excercisesRepo.ListAsync(spec);
 

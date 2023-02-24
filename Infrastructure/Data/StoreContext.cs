@@ -16,6 +16,8 @@ namespace Infrastructue.Data
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
         public DbSet<Gym> Gyms { get; set; }
+        public DbSet<Advert> Adverts { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

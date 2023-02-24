@@ -19,6 +19,14 @@ namespace API.Helpers
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<SubscriptionType, SubscriptionDto>().ReverseMap();
             
+            CreateMap<AdvertCDto, Advert>();
+            CreateMap<Advert, AdvertDto>()
+                .ReverseMap();
+            
+            CreateMap<NotificationCDto, Notification>();
+            CreateMap<Notification, NotificationDto>()
+                .ReverseMap();
+            
             CreateMap<Meal, MealDto>()
                 .ReverseMap();
 

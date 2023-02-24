@@ -276,7 +276,7 @@ namespace Infrastructure.Identity.Migrations
                         .IsRequired();
 
                     b.Navigation("SubscriptionType");
-                });
+                });// this is probably wrong way of doing it
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {

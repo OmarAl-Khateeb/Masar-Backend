@@ -43,7 +43,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Excercises");
+                    b.ToTable("Excercises", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcercisePlan", b =>
@@ -63,7 +63,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExcercisePlans");
+                    b.ToTable("ExcercisePlans", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcerciseSet", b =>
@@ -91,7 +91,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasIndex("ExcercisePlanId");
 
-                    b.ToTable("ExcerciseSets");
+                    b.ToTable("ExcerciseSets", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Meal.Meal", b =>
@@ -125,7 +125,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasIndex("MealPlanId");
 
-                    b.ToTable("Meals");
+                    b.ToTable("Meals", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Meal.MealPlan", b =>
@@ -148,7 +148,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MealPlans");
+                    b.ToTable("MealPlans", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcerciseSet", b =>

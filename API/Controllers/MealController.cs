@@ -30,7 +30,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<MealDto>>> GetMeals()
         {
-            var spec = new MealsSpecification();
+            var spec = new BaseSpecification<Meal>();
 
             var meals = await _mealsRepo.ListAsync(spec);
 
