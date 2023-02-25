@@ -11,6 +11,5 @@ namespace Core.Entities.Excercise
         public string Details { get; set; }
         public string VideoUrl { get; set; }
         public string ImageUrl { get; set; }
-        public int Duration { get; set; }
     }
 }

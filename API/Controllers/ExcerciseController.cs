@@ -43,22 +43,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ExcercisePlan>> CreateExcercisePlan(ExcercisePlanDto excercisePlanDto)
+        public async Task<ActionResult<ExcercisePlan>> CreateExcercisePlan(ExcerciseCPlanDto excercisePlanDto)
         {
-            var excercisePlan = _mapper.Map<ExcercisePlanDto, ExcercisePlan>(excercisePlanDto);
+            var excercisePlan = _mapper.Map<ExcerciseCPlanDto, ExcercisePlan>(excercisePlanDto);
 
-            // var spec = new ExcercisePlanSpecification(ExcercisePlan.AppUserId, ExcercisePlan.Day);
+            int index = 1;
 
-            // var planExist = await _excercisePlansRepo.ListAsync(spec);
-
-            // if (planExist != null) return NoContent(); //update method?
-
-            foreach (var excerciseSetDto in excercisePlanDto.Excerciselist)
-            {
-                var excerciseSet = _mapper.Map<ExcerciseSetDto, ExcerciseSet>(excerciseSetDto);
-            }
-
-            // excercisePlan.Excerciselist.ForEach(excerciseSet => excerciseSet.AppUserId = ExcercisePlanDto.AppUserId);
+            excercisePlan.Excerciselist.ForEach(excerciseSet => excerciseSet.Index = index++);
             _excercisePlansRepo.Add(excercisePlan);
 
             var result = await _context.SaveChangesAsync();

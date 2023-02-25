@@ -29,9 +29,6 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
 
@@ -43,7 +40,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Excercises", (string)null);
+                    b.ToTable("Excercises");
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcercisePlan", b =>
@@ -63,7 +60,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExcercisePlans", (string)null);
+                    b.ToTable("ExcercisePlans");
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcerciseSet", b =>
@@ -72,13 +69,22 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ExcerciseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ExcercisePlanId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Index")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDone")
@@ -91,7 +97,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasIndex("ExcercisePlanId");
 
-                    b.ToTable("ExcerciseSets", (string)null);
+                    b.ToTable("ExcerciseSets");
                 });
 
             modelBuilder.Entity("Core.Entities.Meal.Meal", b =>
@@ -112,6 +118,9 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("MealPlanId")
                         .HasColumnType("INTEGER");
 
@@ -125,7 +134,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasIndex("MealPlanId");
 
-                    b.ToTable("Meals", (string)null);
+                    b.ToTable("Meals");
                 });
 
             modelBuilder.Entity("Core.Entities.Meal.MealPlan", b =>
@@ -148,7 +157,7 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MealPlans", (string)null);
+                    b.ToTable("MealPlans");
                 });
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcerciseSet", b =>

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Course.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20230224124408_CourseInitial2")]
-    partial class CourseInitial2
+    [Migration("20230225143353_CourseInitial")]
+    partial class CourseInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,6 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.Property<string>("Details")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
@@ -75,13 +72,22 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ExcerciseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ExcercisePlanId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Index")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDone")
@@ -114,6 +120,9 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("MealPlanId")
                         .HasColumnType("INTEGER");

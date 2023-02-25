@@ -38,22 +38,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MealPlan>> CreateMealPlan(MealPlanDto mealPlanDto)
+        public async Task<ActionResult<MealPlan>> CreateMealPlan(MealCPlanDto mealPlanDto)
         {
-            var mealPlan = _mapper.Map<MealPlanDto, MealPlan>(mealPlanDto);
+            var mealPlan = _mapper.Map<MealCPlanDto, MealPlan>(mealPlanDto);
 
-            // var spec = new MealPlanSpecification(mealPlan.AppUserId, mealPlan.Day);
+            int index = 1;
 
-            // var planExist = await _mealPlansRepo.ListAsync(spec);
-
-            // if (planExist != null) return NoContent(); //update method?
-
-            foreach (var mealDto in mealPlanDto.MealList)
-            {
-                var meal = _mapper.Map<MealDto, Meal>(mealDto);
-                
-            }
-
+            mealPlan.MealList.ForEach(meal => meal.Index = index++);
             mealPlan.MealList.ForEach(meal => meal.AppUserId = mealPlanDto.AppUserId);
             _mealPlansRepo.Add(mealPlan);
 

@@ -23,7 +23,7 @@ namespace Infrastructure.Data.Course
                 var mealPlan = new MealPlan
                 {
                     CaloriesTotal = 4000,
-                    AppUserId = "1",
+                    AppUserId = "string",
                     MealList = new List<Meal>()
                 };
                 mealPlan.MealList.Add(meala);
@@ -35,8 +35,7 @@ namespace Infrastructure.Data.Course
                 {
                     Name = "Push Up",
                     Details = "you dont know what push ups are?",
-                    ImageUrl = "https://static.vecteezy.com/system/resources/previews/000/162/096/non_2x/man-doing-push-up-vector-illustration.jpg",
-                    Duration = 300
+                    ImageUrl = "https://static.vecteezy.com/system/resources/previews/000/162/096/non_2x/man-doing-push-up-vector-illustration.jpg"
                 };
                 var excerciseSet = new ExcerciseSet
                 {

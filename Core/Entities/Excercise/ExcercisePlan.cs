@@ -7,8 +7,8 @@ namespace Core.Entities.Excercise
 {
     public class ExcercisePlan : BaseEntity
     {
-        public List<ExcerciseSet> Excerciselist { get; set; }
-        public int Day { get; set; }
         public string AppUserId { get; set; }
+        public int Day { get; set; }
+        public List<ExcerciseSet> Excerciselist { get; set; }
     }
 }

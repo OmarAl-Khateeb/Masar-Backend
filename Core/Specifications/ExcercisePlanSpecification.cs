@@ -9,7 +9,6 @@ namespace Core.Specifications
 {
     public class ExcercisePlanSpecification : BaseSpecification<ExcercisePlan>
     {
-        
         public ExcercisePlanSpecification(string appUserId, int? day)
             : base(x =>
                 (string.IsNullOrEmpty(appUserId) || x.AppUserId == appUserId) &&

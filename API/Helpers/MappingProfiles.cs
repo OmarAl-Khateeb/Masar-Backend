@@ -27,9 +27,12 @@ namespace API.Helpers
             CreateMap<Notification, NotificationDto>()
                 .ReverseMap();
             
+            CreateMap<MealCDto, Meal>();
             CreateMap<Meal, MealDto>()
                 .ReverseMap();
 
+            CreateMap<MealCPlanDto, MealPlan>()
+                .ForMember(dest => dest.MealList, opt => opt.MapFrom(src => src.MealList));
             CreateMap<MealPlanDto, MealPlan>()
                 .ForMember(dest => dest.MealList, opt => opt.MapFrom(src => src.MealList))
                 .ReverseMap();
@@ -37,15 +40,19 @@ namespace API.Helpers
             CreateMap<Excercise, ExcerciseDto>()
                 .ReverseMap();
             
+            CreateMap<ExcerciseCSetDto, ExcerciseSet>();
             CreateMap<ExcerciseSet, ExcerciseSetDto>()
                 .ReverseMap();
 
+            CreateMap<ExcerciseCPlanDto, ExcercisePlan>()
+                .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist));
             CreateMap<ExcercisePlanDto, ExcercisePlan>()
                 .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist))
                 .ReverseMap();
                 
             CreateMap<AppUser, UserDto>()
-                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()));
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
+                .ReverseMap();
         }
     }
 }

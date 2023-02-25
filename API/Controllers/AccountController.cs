@@ -60,12 +60,9 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized(new ApiResponse(401));
 
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                FullName = user.FullName
-            };
+            var userdto = _mapper.Map<AppUser, UserDto>(user);
+            userdto.Token = _tokenService.CreateToken(user);
+            return userdto;
         }
 
         [HttpPost("register")]
@@ -82,12 +79,9 @@ namespace API.Controllers
 
             if (!result.Succeeded) return BadRequest(new ApiResponse(400));
 
-            return new UserDto
-            {
-                FullName = user.FullName,
-                Token = _tokenService.CreateToken(user),
-                Email = user.Email
-            };
+            var userdto = _mapper.Map<AppUser, UserDto>(user);
+            userdto.Token = _tokenService.CreateToken(user);
+            return userdto;
         }
 
         [HttpGet("emailexists")]

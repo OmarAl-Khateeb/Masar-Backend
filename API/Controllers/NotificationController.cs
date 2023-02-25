@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Extensions;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -28,6 +29,15 @@ namespace API.Controllers
         public async Task<ActionResult<List<NotificationDto>>> GetNotifications()
         {
             var spec = new BaseSpecification<Notification>();
+
+            var notifications = await _notificationRepo.ListAsync(spec);
+
+            return Ok(_mapper.Map<IReadOnlyList<NotificationDto>>(notifications));
+        }
+        [HttpGet("User")]
+        public async Task<ActionResult<List<NotificationDto>>> GetUserNotifications()
+        {
+            var spec = new BaseSpecification<Notification>(x => x.AppUserId == User.GetUserId());
 
             var notifications = await _notificationRepo.ListAsync(spec);
 
