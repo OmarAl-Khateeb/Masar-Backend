@@ -9,7 +9,10 @@ namespace Core.Entities.Meal
     {
         public List<Meal> MealList { get; set; } = new();
         public int Day { get; set; }
-        public int CaloriesTotal { get; set; }
         public string AppUserId { get; set; }
+        public decimal GetTotal()
+        {
+            return MealList.Sum(m => m.Calories);
+        }
     }
 }

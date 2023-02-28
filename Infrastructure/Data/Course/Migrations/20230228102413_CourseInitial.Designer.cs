@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Course.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20230225143353_CourseInitial")]
+    [Migration("20230228102413_CourseInitial")]
     partial class CourseInitial
     {
         /// <inheritdoc />
@@ -109,9 +109,6 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Calories")
                         .HasColumnType("INTEGER");
 
@@ -148,9 +145,6 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("CaloriesTotal")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");

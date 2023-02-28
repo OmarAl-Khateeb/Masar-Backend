@@ -11,6 +11,7 @@ namespace Infrastructure.Data.Course.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.CreateTable(
                 name: "ExcercisePlans",
                 columns: table => new
@@ -50,7 +51,6 @@ namespace Infrastructure.Data.Course.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Day = table.Column<int>(type: "INTEGER", nullable: false),
-                    CaloriesTotal = table.Column<int>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
@@ -96,7 +96,6 @@ namespace Infrastructure.Data.Course.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Calories = table.Column<int>(type: "INTEGER", nullable: false),
                     Wieght = table.Column<int>(type: "INTEGER", nullable: false),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true),
                     MealPlanId = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
@@ -133,9 +132,6 @@ namespace Infrastructure.Data.Course.Migrations
 
             migrationBuilder.DropTable(
                 name: "Meals");
-
-            migrationBuilder.DropTable(
-                name: "ExcercisePlans");
 
             migrationBuilder.DropTable(
                 name: "MealPlans");

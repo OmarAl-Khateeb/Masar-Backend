@@ -106,9 +106,6 @@ namespace Infrastructure.Data.Course.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Calories")
                         .HasColumnType("INTEGER");
 
@@ -145,9 +142,6 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("CaloriesTotal")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");

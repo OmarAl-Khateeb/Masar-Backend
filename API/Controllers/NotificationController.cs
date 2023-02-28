@@ -16,21 +16,19 @@ namespace API.Controllers
 {
     public class NotificationController : BaseApiController
     {
-        private readonly StoreContext _context;
-        private readonly IGenericRepository<Notification, StoreContext> _notificationRepo;
         private readonly IMapper _mapper;
-        public NotificationController(StoreContext context, IGenericRepository<Notification, StoreContext> notificationRepo, IMapper mapper)
+        private readonly IUnitOfWork<StoreContext> _unitOfWork;
+        public NotificationController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _notificationRepo = notificationRepo;
-            _context = context;
         }
         [HttpGet]
         public async Task<ActionResult<List<NotificationDto>>> GetNotifications()
         {
             var spec = new BaseSpecification<Notification>();
 
-            var notifications = await _notificationRepo.ListAsync(spec);
+            var notifications = await _unitOfWork.Repository<Notification, StoreContext>().ListAsync(spec);
 
             return Ok(_mapper.Map<IReadOnlyList<NotificationDto>>(notifications));
         }
@@ -39,7 +37,7 @@ namespace API.Controllers
         {
             var spec = new BaseSpecification<Notification>(x => x.AppUserId == User.GetUserId());
 
-            var notifications = await _notificationRepo.ListAsync(spec);
+            var notifications = await _unitOfWork.Repository<Notification, StoreContext>().ListAsync(spec);
 
             return Ok(_mapper.Map<IReadOnlyList<NotificationDto>>(notifications));
         }
@@ -51,7 +49,7 @@ namespace API.Controllers
         {
             var spec = new BaseSpecification<Notification>(x => x.Id == id);
 
-            var notification = await _notificationRepo.GetEntityWithSpec(spec);
+            var notification = await _unitOfWork.Repository<Notification, StoreContext>().GetEntityWithSpec(spec);
 
             if (notification == null) return NotFound(new ApiResponse(404));
 
@@ -62,9 +60,9 @@ namespace API.Controllers
         public async Task<ActionResult<NotificationCDto>> CreateNotification(NotificationCDto notificationDto)
         {
             var notification = _mapper.Map<NotificationCDto, Notification>(notificationDto);
-            _notificationRepo.Add(notification);
+            _unitOfWork.Repository<Notification, StoreContext>().Add(notification);
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest("Failed to create notification");
 
@@ -74,13 +72,13 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNotification(int id)
         {
-            var notification = await _notificationRepo.GetByIdAsync(id);
+            var notification = await _unitOfWork.Repository<Notification, StoreContext>().GetByIdAsync(id);
 
             if (notification == null) return NotFound();
 
-            _notificationRepo.Delete(notification);
+            _unitOfWork.Repository<Notification, StoreContext>().Delete(notification);
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest("Failed to delete notification");
 

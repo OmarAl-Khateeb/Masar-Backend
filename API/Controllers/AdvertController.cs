@@ -15,14 +15,12 @@ namespace API.Controllers
 {
     public class AdvertController : BaseApiController
     {
-        private readonly StoreContext _context;
-        private readonly IGenericRepository<Advert, StoreContext> _advertRepo;
         private readonly IMapper _mapper;
-        public AdvertController(StoreContext context, IGenericRepository<Advert, StoreContext> advertRepo, IMapper mapper)
+        private readonly IUnitOfWork<StoreContext> _unitOfWork;
+        public AdvertController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _advertRepo = advertRepo;
-            _context = context;
         }
 
         [HttpGet]
@@ -30,7 +28,7 @@ namespace API.Controllers
         {
             var spec = new BaseSpecification<Advert>();
 
-            var Adverts = await _advertRepo.ListAsync(spec);
+            var Adverts = await _unitOfWork.Repository<Advert, StoreContext>().ListAsync(spec);
 
             return Ok(_mapper.Map<IReadOnlyList<AdvertDto>>(Adverts));
         }
@@ -42,7 +40,7 @@ namespace API.Controllers
         {
             var spec = new BaseSpecification<Advert>(x => x.Id == id);
 
-            var Advert = await _advertRepo.GetEntityWithSpec(spec);
+            var Advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetEntityWithSpec(spec);
 
             if (Advert == null) return NotFound(new ApiResponse(404));
 
@@ -53,9 +51,9 @@ namespace API.Controllers
         public async Task<ActionResult<AdvertCDto>> CreateAdvert(AdvertCDto advertDto)
         {
             var advert = _mapper.Map<AdvertCDto, Advert>(advertDto);
-            _advertRepo.Add(advert);
+             _unitOfWork.Repository<Advert, StoreContext>().Add(advert);
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest("Failed to create meal plan");
 
@@ -65,13 +63,13 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdvert(int id)
         {
-            var advert = await _advertRepo.GetByIdAsync(id);
+            var advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetByIdAsync(id);
 
             if (advert == null) return NotFound();
 
-            _advertRepo.Delete(advert);
+             _unitOfWork.Repository<Advert, StoreContext>().Delete(advert);
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest("Failed to delete Advert");
 

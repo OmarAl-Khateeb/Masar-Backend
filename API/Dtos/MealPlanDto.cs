@@ -8,14 +8,13 @@ namespace API.Dtos
     public class MealPlanDto
     {
         public int Day { get; set; }
-        public int CaloriesTotal { get; set; }
+        public int Total { get; set; }
         public string AppUserId { get; set; }
         public List<MealDto> MealList { get; set; }
     }
     public class MealCPlanDto
     {
         public int Day { get; set; }
-        public int CaloriesTotal { get; set; }
         public string AppUserId { get; set; }
         public List<MealCDto> MealList { get; set; }
     }

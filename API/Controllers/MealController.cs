@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
+using API.Errors;
 using API.Extensions;
 using AutoMapper;
 using Core.Entities.Meal;
 using Core.Interfaces;
 using Core.Specifications;
 using Infrastructure.Data.Course;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class MealController : BaseApiController
     {
-        private readonly IGenericRepository<MealPlan, CourseContext> _mealPlansRepo;
-        private readonly IGenericRepository<Meal, CourseContext> _mealsRepo;
         private readonly IMapper _mapper;
-        private readonly CourseContext _context;
-        public MealController(CourseContext context, IGenericRepository<MealPlan, CourseContext> mealPlansRepo, IGenericRepository<Meal, CourseContext> mealsRepo, IMapper mapper)
+        private readonly IUnitOfWork<CourseContext> _unitOfWork;
+        public MealController(IUnitOfWork<CourseContext> unitOfWork, IMapper mapper)
         {
-            _context = context;
-            _mealPlansRepo = mealPlansRepo;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _mealsRepo = mealsRepo;
         }
 
         [HttpGet]
@@ -32,7 +31,7 @@ namespace API.Controllers
         {
             var spec = new BaseSpecification<Meal>();
 
-            var meals = await _mealsRepo.ListAsync(spec);
+            var meals = await _unitOfWork.Repository<Meal, CourseContext>().ListAsync(spec);
 
             return Ok(_mapper.Map<IReadOnlyList<MealDto>>(meals));
         }
@@ -45,12 +44,11 @@ namespace API.Controllers
             int index = 1;
 
             mealPlan.MealList.ForEach(meal => meal.Index = index++);
-            mealPlan.MealList.ForEach(meal => meal.AppUserId = mealPlanDto.AppUserId);
-            _mealPlansRepo.Add(mealPlan);
+            _unitOfWork.Repository<MealPlan, CourseContext>().Add(mealPlan);
 
-            var result = await _context.SaveChangesAsync();
+            var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest("Failed to create meal plan");
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to create meal plan"));
 
             return Ok(mealPlan);
         }
@@ -61,7 +59,9 @@ namespace API.Controllers
         {
             var spec = new MealPlanSpecification(appUserId, day);
 
-            var mealPlans = await _mealPlansRepo.ListAsync(spec);
+            var mealPlans = await _unitOfWork.Repository<MealPlan, CourseContext>().ListAsync(spec);
+            
+            if (mealPlans == null) return NotFound(new ApiResponse(404));
 
             var mealPlanDtos = _mapper.Map<IReadOnlyList<MealPlan>, IReadOnlyList<MealPlanDto>>(mealPlans);
 
@@ -74,7 +74,9 @@ namespace API.Controllers
         {
             var spec = new MealPlanSpecification(User.GetUserId(), day);
 
-            var mealPlans = await _mealPlansRepo.ListAsync(spec);
+            var mealPlans = await _unitOfWork.Repository<MealPlan, CourseContext>().ListAsync(spec);
+
+            if (mealPlans == null) return NotFound(new ApiResponse(404));
 
             var mealPlanDtos = _mapper.Map<IReadOnlyList<MealPlan>, IReadOnlyList<MealPlanDto>>(mealPlans);
 

@@ -22,7 +22,6 @@ namespace Infrastructure.Data.Course
                 };
                 var mealPlan = new MealPlan
                 {
-                    CaloriesTotal = 4000,
                     AppUserId = "string",
                     MealList = new List<Meal>()
                 };

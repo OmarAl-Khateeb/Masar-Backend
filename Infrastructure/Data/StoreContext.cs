@@ -1,6 +1,7 @@
 using System.Reflection;
 using Core.Entities;
 using Core.Entities.Identity;
+using Core.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructue.Data
@@ -18,6 +19,9 @@ namespace Infrastructue.Data
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Advert> Adverts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

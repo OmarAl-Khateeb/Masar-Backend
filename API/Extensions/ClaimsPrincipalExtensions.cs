@@ -8,5 +8,9 @@ namespace API.Extensions
         {
             return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
+        public static int GetGymId(this ClaimsPrincipal user)
+        {
+            return int.Parse(user.FindFirst(ClaimTypes.GivenName)?.Value);
+        }
     }
 }

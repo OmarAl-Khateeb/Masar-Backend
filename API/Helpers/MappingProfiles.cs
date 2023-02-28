@@ -5,6 +5,7 @@ using API.Extensions;
 using Core.Entities.Identity;
 using Core.Entities.Meal;
 using Core.Entities.Excercise;
+using Core.Entities.OrderAggregate;
 
 namespace API.Helpers
 {
@@ -43,6 +44,12 @@ namespace API.Helpers
             CreateMap<ExcerciseCSetDto, ExcerciseSet>();
             CreateMap<ExcerciseSet, ExcerciseSetDto>()
                 .ReverseMap();
+            
+            CreateMap<OrderCDto, Order>();
+            CreateMap<Order, OrderDto>()
+                .ReverseMap();
+
+            CreateMap<OrderItem, OrderItemDto>();
 
             CreateMap<ExcerciseCPlanDto, ExcercisePlan>()
                 .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist));
