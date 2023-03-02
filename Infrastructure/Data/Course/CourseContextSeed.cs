@@ -38,7 +38,7 @@ namespace Infrastructure.Data.Course
                 };
                 var excerciseSet = new ExcerciseSet
                 {
-                    Reps = 10,
+                    Reps = "10, 10, 12, 12",
                     ExcerciseId = 1,
                 };
                 var excercisePlan = new ExcercisePlan

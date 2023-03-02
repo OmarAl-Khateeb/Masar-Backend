@@ -13,11 +13,14 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<Product, ProductToReturnDto>()
+            CreateMap<ProductCDto, Product>();
+            
+            CreateMap<Product, ProductDto>()
                 .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
-                .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
+                .ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ProductCategory.Name))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
             CreateMap<Address, AddressDto>().ReverseMap();
+            
             CreateMap<SubscriptionType, SubscriptionDto>().ReverseMap();
             
             CreateMap<AdvertCDto, Advert>();
@@ -47,16 +50,23 @@ namespace API.Helpers
             
             CreateMap<OrderCDto, Order>();
             CreateMap<Order, OrderDto>()
-                .ReverseMap();
+                .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
+                .ForMember(d => d.ShippingPrice, o => o.MapFrom(s => s.DeliveryMethod.Price));
 
-            CreateMap<OrderItem, OrderItemDto>();
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ProductItemId))
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ItemOrdered.ProductName))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.ItemOrdered.PictureUrl))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<OrderItemUrlResolver>())
+                .ReverseMap();
 
             CreateMap<ExcerciseCPlanDto, ExcercisePlan>()
                 .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist));
             CreateMap<ExcercisePlanDto, ExcercisePlan>()
                 .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist))
                 .ReverseMap();
-                
+
+            CreateMap<AppUser, UserTokenDto>();
             CreateMap<AppUser, UserDto>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
                 .ReverseMap();

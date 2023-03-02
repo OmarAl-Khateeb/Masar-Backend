@@ -14,7 +14,7 @@ namespace Infrastructue.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
-        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Advert> Adverts { get; set; }

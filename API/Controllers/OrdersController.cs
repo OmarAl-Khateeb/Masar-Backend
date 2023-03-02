@@ -42,15 +42,18 @@ namespace API.Controllers
                 var orderItem = new OrderItem(itemOrdered, productItem.Price, Item.Quantity);
                 items.Add(orderItem);
             }
+        
+            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod, StoreContext>().GetByIdAsync(orderDto.DeliveryMethodId);
+            
             var subtotal = items.Sum(item => item.Price*item.Quantity);
 
-            var order = new Order(items, User.GetUserId(), User.GetGymId(), subtotal, orderDto.DeliveryMethod);
+            var order = new Order(items, User.GetUserId(), User.GetGymId(), subtotal, deliveryMethod);
 
             _unitOfWork.Repository<Order, StoreContext>().Add(order);
 
             var result = await _unitOfWork.Complete();
 
-            if (order == null || result <= 0) return BadRequest(new ApiResponse(400, "Problem creating order"));
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating order"));
 
             return Ok(order);
         }
@@ -77,6 +80,12 @@ namespace API.Controllers
             if (orders == null) return NotFound(new ApiResponse(404));
 
             return Ok(_mapper.Map<IReadOnlyList<OrderDto>>(orders));
+        }
+
+        [HttpGet("deliveryMethods")]
+        public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+        {
+            return Ok(await _unitOfWork.Repository<DeliveryMethod, StoreContext>().ListAllAsync());
         }
         
     }

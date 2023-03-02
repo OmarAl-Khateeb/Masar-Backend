@@ -39,11 +39,11 @@ namespace Infrastructure.Data
                 context.ProductBrands.AddRange(brands);
             }
 
-            if (!context.ProductTypes.Any())
+            if (!context.ProductCategories.Any())
             {
                 var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
-                var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
-                context.ProductTypes.AddRange(types);
+                var types = JsonSerializer.Deserialize<List<ProductCategory>>(typesData);
+                context.ProductCategories.AddRange(types);
             }
 
             if (!context.Products.Any())

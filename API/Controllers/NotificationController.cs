@@ -76,7 +76,7 @@ namespace API.Controllers
 
             if (notification == null) return NotFound();
 
-            _unitOfWork.Repository<Notification, StoreContext>().Delete(notification);
+            _unitOfWork.Repository<Notification, StoreContext>().Delete(notification, true);
 
             var result = await _unitOfWork.Complete();
 

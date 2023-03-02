@@ -33,24 +33,11 @@ namespace API.Controllers
         {
             var user = await _userManager.FindByEmailFromClaimsPrincipal(User);
 
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                FullName = user.FullName,
-                DateOfBirth = user.DateOfBirth,
-                Age = user.DateOfBirth.CalcuateAge(),
-                Hieght = user.Hieght,
-                Wieght = user.Wieght,
-                PhotoUrl = user.PhotoUrl,
-                SubscriptionExpDate = user.SubscriptionExpDate,
-                SubscriptionTypeId = user.SubscriptionTypeId,
-                GymId = user.GymId
-            };
+            return _mapper.Map<AppUser, UserDto>(user);
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserTokenDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
@@ -60,13 +47,15 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized(new ApiResponse(401));
 
-            var userdto = _mapper.Map<AppUser, UserDto>(user);
+            var userdto = _mapper.Map<AppUser, UserTokenDto>(user);
+
             userdto.Token = _tokenService.CreateToken(user);
+
             return userdto;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserTokenDto>> Register(RegisterDto registerDto)
         {
             var user = new AppUser
             {
@@ -79,7 +68,7 @@ namespace API.Controllers
 
             if (!result.Succeeded) return BadRequest(new ApiResponse(400));
 
-            var userdto = _mapper.Map<AppUser, UserDto>(user);
+            var userdto = _mapper.Map<AppUser, UserTokenDto>(user);
             userdto.Token = _tokenService.CreateToken(user);
             return userdto;
         }
@@ -90,6 +79,7 @@ namespace API.Controllers
             return await _userManager.FindByEmailAsync(email) != null;
         }
 
+        [Authorize]
         [HttpGet("Subscription")]
         public async Task<ActionResult<SubscriptionDto>> GetUserAddress()
         {

@@ -11,7 +11,6 @@ namespace Infrastructure.Data.Course.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.CreateTable(
                 name: "ExcercisePlans",
                 columns: table => new
@@ -20,6 +19,7 @@ namespace Infrastructure.Data.Course.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true),
                     Day = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -37,6 +37,7 @@ namespace Infrastructure.Data.Course.Migrations
                     Details = table.Column<string>(type: "TEXT", nullable: true),
                     VideoUrl = table.Column<string>(type: "TEXT", nullable: true),
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -52,6 +53,7 @@ namespace Infrastructure.Data.Course.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Day = table.Column<int>(type: "INTEGER", nullable: false),
                     AppUserId = table.Column<string>(type: "TEXT", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -66,12 +68,12 @@ namespace Infrastructure.Data.Course.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Index = table.Column<int>(type: "INTEGER", nullable: false),
-                    Reps = table.Column<int>(type: "INTEGER", nullable: false),
-                    Count = table.Column<int>(type: "INTEGER", nullable: false),
+                    Reps = table.Column<string>(type: "TEXT", nullable: true),
                     Duration = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDone = table.Column<bool>(type: "INTEGER", nullable: false),
                     ExcerciseId = table.Column<int>(type: "INTEGER", nullable: false),
                     ExcercisePlanId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -97,6 +99,7 @@ namespace Infrastructure.Data.Course.Migrations
                     Calories = table.Column<int>(type: "INTEGER", nullable: false),
                     Wieght = table.Column<int>(type: "INTEGER", nullable: false),
                     MealPlanId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -132,6 +135,9 @@ namespace Infrastructure.Data.Course.Migrations
 
             migrationBuilder.DropTable(
                 name: "Meals");
+
+            migrationBuilder.DropTable(
+                name: "ExcercisePlans");
 
             migrationBuilder.DropTable(
                 name: "MealPlans");

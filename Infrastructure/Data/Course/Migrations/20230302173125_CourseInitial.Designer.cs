@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Course.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20230228102413_CourseInitial")]
+    [Migration("20230302173125_CourseInitial")]
     partial class CourseInitial
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace Infrastructure.Data.Course.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -61,6 +64,9 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("ExcercisePlans");
@@ -70,9 +76,6 @@ namespace Infrastructure.Data.Course.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Count")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
@@ -90,11 +93,14 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<int>("Index")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsDone")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Reps")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Reps")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -119,6 +125,9 @@ namespace Infrastructure.Data.Course.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MealPlanId")
@@ -150,6 +159,9 @@ namespace Infrastructure.Data.Course.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Day")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

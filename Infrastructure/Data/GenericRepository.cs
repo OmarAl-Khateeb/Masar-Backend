@@ -28,11 +28,19 @@ namespace Infrastructure.Data
         {
             return await ApplySpecification(spec).CountAsync();
         }
-
-        public void Delete(T entity)
+        public void Delete(T entity, bool softDelete)
         {
-            _context.Set<T>().Remove(entity);
+            if (softDelete)
+            {
+                entity.IsDeleted = true;
+                Update(entity);
+            }
+            else
+            {
+                _context.Set<T>().Remove(entity);
+            }
         }
+
 
         public async Task<T> GetByIdAsync(int id)
         {
@@ -53,24 +61,22 @@ namespace Infrastructure.Data
         {
             return await ApplySpecification(spec).ToListAsync();
         }
-        
-
-        public async Task<IReadOnlyList<T>> ListTAsync(ISpecification<T> spec)
-        {
-            return await ApplySpecification(spec)
-            .ToListAsync();
-        }
-
-
         public void Update(T entity)
         {
             _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        private IQueryable<T> ApplySpecification(ISpecification<T> spec, bool includeDeleted = false)
         {
-            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
+            var query = SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
+
+            if (!includeDeleted)
+            {
+                query = query.Where(e => !(e.IsDeleted));
+            }
+
+            return query;
         }
     }
 }

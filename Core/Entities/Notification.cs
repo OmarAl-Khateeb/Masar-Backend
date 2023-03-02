@@ -10,5 +10,6 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Details { get; set; }
         public string AppUserId { get; set; }
+        public int GymId { get; set; }
     }
 }

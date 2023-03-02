@@ -9,7 +9,7 @@ namespace API.Dtos
     public class OrderCDto
     {
         public IReadOnlyList<OrderCItemDto> OrderItems { get; set; }
-        public DeliveryMethod DeliveryMethod { get; set; }
+        public int DeliveryMethodId { get; set; }
         public string PaymentIntentId { get; set; }
     }
 
@@ -21,9 +21,10 @@ namespace API.Dtos
         public int GymId { get; set; }
         public DateTime OrderDate { get; set; }
         public IReadOnlyList<OrderItemDto> OrderItems { get; set; }
+        public string DeliveryMethod { get; set; }
+        public decimal ShippingPrice { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Total { get; set; }
-        public string DeliveryMethod { get; set; }
-        public string Status { get; set; }
+        public string OrderStatus { get; set; }
     }
 }
