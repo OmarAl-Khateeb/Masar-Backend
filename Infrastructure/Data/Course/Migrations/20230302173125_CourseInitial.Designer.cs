@@ -136,7 +136,7 @@ namespace Infrastructure.Data.Course.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Wieght")
+                    b.Property<int>("Weight")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

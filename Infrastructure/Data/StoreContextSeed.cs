@@ -18,7 +18,7 @@ namespace Infrastructure.Data
                     Name = "CHICKEN",
                     Description = "food",
                     Calories = 4000,
-                    Wieght = 200,
+                    Weight = 200,
                 };
                 var mealPlan = new MealPlan
                 {

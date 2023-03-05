@@ -11,13 +11,13 @@ namespace API.Dtos
         public string Name { get; set; }
         public string Description { get; set; }
         public int Calories { get; set; }
-        public int Wieght { get; set; }
+        public int Weight { get; set; }
     }
     public class MealCDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public int Calories { get; set; }
-        public int Wieght { get; set; }
+        public int Weight { get; set; }
     }
 }

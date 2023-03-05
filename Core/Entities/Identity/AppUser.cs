@@ -7,8 +7,8 @@ namespace Core.Entities.Identity
         public string FullName { get; set; }
         public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int Hieght { get; set; }
-        public int Wieght { get; set; }
+        public int Height { get; set; }
+        public int Weight { get; set; }
         public string PhotoUrl { get; set; }
         public DateTime SubscriptionExpDate { get; set; }
         public SubscriptionType SubscriptionType { get; set; }

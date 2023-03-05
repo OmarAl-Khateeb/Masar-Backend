@@ -54,7 +54,7 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<int>("GymId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Hieght")
+                    b.Property<int>("Height")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")
@@ -99,7 +99,7 @@ namespace Infrastructure.Identity.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Wieght")
+                    b.Property<int>("Weight")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

@@ -97,7 +97,7 @@ namespace Infrastructure.Data.Course.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Calories = table.Column<int>(type: "INTEGER", nullable: false),
-                    Wieght = table.Column<int>(type: "INTEGER", nullable: false),
+                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
                     MealPlanId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
