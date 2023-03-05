@@ -45,10 +45,10 @@ namespace Infrastructure.Data.Course
                 {
                     Day = 1,
                     AppUserId = "1",
-                    Excerciselist = new List<ExcerciseSet>()
+                    ExcerciseList = new List<ExcerciseSet>()
                 };
                 course.Excercises.Add(excercisea);
-                excercisePlan.Excerciselist.Add(excerciseSet);
+                excercisePlan.ExcerciseList.Add(excerciseSet);
                 course.ExcercisePlans.Add(excercisePlan);
             }
         await course.SaveChangesAsync();

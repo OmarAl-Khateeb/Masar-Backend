@@ -65,9 +65,9 @@ namespace API.Helpers
                 .ReverseMap();
 
             CreateMap<ExcerciseCPlanDto, ExcercisePlan>()
-                .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist));
+                .ForMember(dest => dest.ExcerciseList, opt => opt.MapFrom(src => src.ExcerciseList));
             CreateMap<ExcercisePlanDto, ExcercisePlan>()
-                .ForMember(dest => dest.Excerciselist, opt => opt.MapFrom(src => src.Excerciselist))
+                .ForMember(dest => dest.ExcerciseList, opt => opt.MapFrom(src => src.ExcerciseList))
                 .ReverseMap();
 
             CreateMap<AppUser, UserTokenDto>();

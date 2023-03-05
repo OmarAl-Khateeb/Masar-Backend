@@ -41,7 +41,7 @@ namespace API.Controllers
 
             int index = 1;
 
-            excercisePlan.Excerciselist.ForEach(excerciseSet => excerciseSet.Index = index++);
+            excercisePlan.ExcerciseList.ForEach(excerciseSet => excerciseSet.Index = index++);
             
             _unitOfWork.Repository<ExcercisePlan, CourseContext>().Add(excercisePlan);
 

@@ -169,7 +169,7 @@ namespace Infrastructure.Data.Course.Migrations
             modelBuilder.Entity("Core.Entities.Excercise.ExcerciseSet", b =>
                 {
                     b.HasOne("Core.Entities.Excercise.ExcercisePlan", null)
-                        .WithMany("Excerciselist")
+                        .WithMany("ExcerciseList")
                         .HasForeignKey("ExcercisePlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -186,7 +186,7 @@ namespace Infrastructure.Data.Course.Migrations
 
             modelBuilder.Entity("Core.Entities.Excercise.ExcercisePlan", b =>
                 {
-                    b.Navigation("Excerciselist");
+                    b.Navigation("ExcerciseList");
                 });
 
             modelBuilder.Entity("Core.Entities.Meal.MealPlan", b =>

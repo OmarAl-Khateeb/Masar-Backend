@@ -15,7 +15,7 @@ namespace Core.Specifications
                 (!day.HasValue || x.Day == day)
             )
         {
-            AddInclude(x => x.Excerciselist);
+            AddInclude(x => x.ExcerciseList);
         }
     }
 }

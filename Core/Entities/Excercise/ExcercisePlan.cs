@@ -9,6 +9,6 @@ namespace Core.Entities.Excercise
     {
         public string AppUserId { get; set; }
         public int Day { get; set; }
-        public List<ExcerciseSet> Excerciselist { get; set; }
+        public List<ExcerciseSet> ExcerciseList { get; set; }
     }
 }
