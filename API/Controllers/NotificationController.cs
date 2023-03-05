@@ -67,7 +67,7 @@ namespace API.Controllers
 
             var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest("Failed to create notification");
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to create notification"));
 
             return Ok(notification);
         }
@@ -83,7 +83,7 @@ namespace API.Controllers
 
             var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest("Failed to delete notification");
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to delete notification"));
 
             return NoContent();
         }

@@ -55,7 +55,7 @@ namespace API.Controllers
 
             var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest("Failed to create meal plan");
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to Create Advert"));
 
             return Ok(advert);
         }
@@ -65,13 +65,13 @@ namespace API.Controllers
         {
             var advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetByIdAsync(id);
 
-            if (advert == null) return NotFound();
+            if (advert == null) return NotFound(new ApiResponse(404));
 
              _unitOfWork.Repository<Advert, StoreContext>().Delete(advert);
 
             var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest("Failed to delete Advert");
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to delete Advert"));
 
             return NoContent();
         }
