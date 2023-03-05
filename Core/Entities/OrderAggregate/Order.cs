@@ -11,16 +11,18 @@ namespace Core.Entities.OrderAggregate
         {
         }
 
-        public Order(IReadOnlyList<OrderItem> orderItems, string appUserId, int gymId, decimal subtotal, DeliveryMethod deliveryMethod)
+        public Order(IReadOnlyList<OrderItem> orderItems, string appUserId, int gymId, decimal subtotal, string address, DeliveryMethod deliveryMethod)
         {
             AppUserId = appUserId;
             GymId = gymId;
             OrderItems = orderItems;
             Subtotal = subtotal;
+            Address = address;
             DeliveryMethod = deliveryMethod;
         }
 
         public string AppUserId { get; set; }
+        public string Address { get; set; }
         public int GymId { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public IReadOnlyList<OrderItem> OrderItems { get; set; }

@@ -23,6 +23,7 @@ namespace API.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<NotificationDto>>> GetNotifications()
         {
@@ -32,10 +33,11 @@ namespace API.Controllers
 
             return Ok(_mapper.Map<IReadOnlyList<NotificationDto>>(notifications));
         }
+        
         [HttpGet("User")]
         public async Task<ActionResult<List<NotificationDto>>> GetUserNotifications()
         {
-            var spec = new BaseSpecification<Notification>(x => x.AppUserId == User.GetUserId());
+            var spec = new BaseSpecification<Notification>(x => x.AppUserId == User.GetUserId() || x.AppUserId == ""); 
 
             var notifications = await _unitOfWork.Repository<Notification, StoreContext>().ListAsync(spec);
 
@@ -60,6 +62,7 @@ namespace API.Controllers
         public async Task<ActionResult<NotificationCDto>> CreateNotification(NotificationCDto notificationDto)
         {
             var notification = _mapper.Map<NotificationCDto, Notification>(notificationDto);
+            
             _unitOfWork.Repository<Notification, StoreContext>().Add(notification);
 
             var result = await _unitOfWork.Complete();

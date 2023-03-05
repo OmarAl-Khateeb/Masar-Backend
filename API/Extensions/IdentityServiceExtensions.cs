@@ -38,8 +38,11 @@ namespace API.Extensions
                     };
                 });
 
-
-            services.AddAuthorization();
+            services.AddAuthorization(opt => 
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("RequireCaptainRole", policy => policy.RequireRole("Admin", "Captain"));
+            });
 
             return services;
         }

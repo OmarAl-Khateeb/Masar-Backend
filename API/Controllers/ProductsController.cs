@@ -77,7 +77,6 @@ namespace API.Controllers
             if (product == null) return NotFound(new ApiResponse(404));
 
             _mapper.Map<ProductCDto, Product>(productCDto, product);
-            product.GymId = User.GetGymId();
 
             _unitOfWork.Repository<Product, StoreContext>().Update(product);
 

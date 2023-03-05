@@ -31,7 +31,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindByEmailFromClaimsPrincipal(User);
+            var user = await _userManager.FindUserByClaimsPrincipleWithSubscription(User);
 
             return _mapper.Map<AppUser, UserDto>(user);
         }
@@ -61,7 +61,15 @@ namespace API.Controllers
             {
                 FullName = registerDto.FullName,
                 Email = registerDto.Email,
-                UserName = registerDto.Email
+                UserName = registerDto.Email,
+                DateOfBirth = DateTime.Today.AddYears(-30),
+                Hieght = 180,
+                Wieght = 100,
+                PhotoUrl = "some/some",
+                GymId = 1,
+                SubscriptionExpDate = DateTime.UtcNow.AddMonths(2),
+                SubscriptionTypeId = 1
+                //temporary
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -81,34 +89,11 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("Subscription")]
-        public async Task<ActionResult<SubscriptionDto>> GetUserAddress()
+        public async Task<ActionResult<SubscriptionDto>> GetUserSubscription()
         {
-            var user = await _userManager.FindUserByClaimsPrincipleWithAddress(User);
+            var user = await _userManager.FindUserByClaimsPrincipleWithSubscription(User);
 
             return _mapper.Map<SubscriptionType, SubscriptionDto>(user.SubscriptionType);
         }
-
-        // [HttpGet("address")]
-        // public async Task<ActionResult<SubscriptionDto>> GetUserAddress()
-        // {
-        //     var user = await _userManager.FindUserByClaimsPrincipleWithAddress(User);
-
-        //     return _mapper.Map<Address, AddressDto>(user.Address);
-        // }
-
-        // [Authorize]
-        // [HttpPut("address")]
-        // public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
-        // {
-        //     var user = await _userManager.FindUserByClaimsPrincipleWithAddress(User);
-
-        //     user.Address = _mapper.Map<AddressDto, Address>(address);
-
-        //     var result = await _userManager.UpdateAsync(user);
-
-        //     if (result.Succeeded) return Ok(_mapper.Map<AddressDto>(user.Address));
-
-        //     return BadRequest("Problem updating the user");
-        // }
     }
 }

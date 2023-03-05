@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Core.Entities.Identity;
+using Core.Specifications;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +8,7 @@ namespace API.Extensions
 {
     public static class UserManagerExtensions
     {
-        public static async Task<AppUser> FindUserByClaimsPrincipleWithAddress(this UserManager<AppUser> userManager, 
+        public static async Task<AppUser> FindUserByClaimsPrincipleWithSubscription(this UserManager<AppUser> userManager, 
             ClaimsPrincipal user)
         {
             var id = user.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -20,6 +20,7 @@ namespace Infrastructure.Identity
                     FullName = "Bob",
                     Email = "bob@test.com",
                     UserName = "bob@test.com",
+                    Address = "basmayah",
                     DateOfBirth = DateTime.Today.AddYears(-32),
                     Hieght = 180,
                     Wieght = 100,
@@ -36,8 +37,23 @@ namespace Infrastructure.Identity
                         GymId = 1
                     }
                 };
-
                 await userManager.CreateAsync(user, "Pa$$w0rd");
+                var user2 = new AppUser
+                {
+                    FullName = "Bob2",
+                    Email = "bob2@test.com",
+                    UserName = "bob2@test.com",
+                    Address = "bob2@test.com",
+                    DateOfBirth = DateTime.Today.AddYears(-32),
+                    Hieght = 180,
+                    Wieght = 100,
+                    PhotoUrl = "some/some",
+                    GymId = 1,
+                    SubscriptionExpDate = DateTime.UtcNow.AddMonths(-1),
+                    SubscriptionTypeId = 1
+                };
+
+                await userManager.CreateAsync(user2, "Pa$$w0rd");
             }
         }
     }

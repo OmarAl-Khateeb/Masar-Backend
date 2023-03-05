@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230222095556_IdentityInitial")]
+    [Migration("20230305122145_IdentityInitial")]
     partial class IdentityInitial
     {
         /// <inheritdoc />
@@ -27,6 +27,9 @@ namespace Infrastructure.Identity.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -129,6 +132,9 @@ namespace Infrastructure.Identity.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("GymId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")

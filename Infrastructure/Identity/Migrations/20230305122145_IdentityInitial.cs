@@ -36,6 +36,7 @@ namespace Infrastructure.Identity.Migrations
                     Duration = table.Column<int>(type: "INTEGER", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     GymId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -70,6 +71,7 @@ namespace Infrastructure.Identity.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     FullName = table.Column<string>(type: "TEXT", nullable: true),
+                    Address = table.Column<string>(type: "TEXT", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Hieght = table.Column<int>(type: "INTEGER", nullable: false),
                     Wieght = table.Column<int>(type: "INTEGER", nullable: false),
