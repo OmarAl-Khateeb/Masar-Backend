@@ -68,21 +68,17 @@ namespace API.Controllers
 
         
         [HttpGet("UserPlans")]
-        public async Task<ActionResult<IReadOnlyList<ExcercisePlanDto>>> GetExcercisePlansByUserId(int? day)
+        public async Task<ActionResult<IReadOnlyList<ExcercisePlanDto>>> GetExcercisePlansByUserId()
         {
-            var spec = new ExcercisePlanSpecification(User.GetUserId(), day);
+            var spec = new ExcercisePlanSpecification(User.GetUserId(), null);
 
             var ExcercisePlans = await _unitOfWork.Repository<ExcercisePlan, CourseContext>().ListAsync(spec);
 
             if (ExcercisePlans == null) return NotFound(new ApiResponse(404));
 
             var ExcercisePlanDtos = _mapper.Map<IReadOnlyList<ExcercisePlan>, IReadOnlyList<ExcercisePlanDto>>(ExcercisePlans);
-            var responseData = new Dictionary<string, object>()
-            {
-                { "data", ExcercisePlanDtos }
-            };
 
-            return Ok(responseData);
+            return Ok(ExcercisePlanDtos);
         }
 
     }
