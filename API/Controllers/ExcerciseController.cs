@@ -77,8 +77,12 @@ namespace API.Controllers
             if (ExcercisePlans == null) return NotFound(new ApiResponse(404));
 
             var ExcercisePlanDtos = _mapper.Map<IReadOnlyList<ExcercisePlan>, IReadOnlyList<ExcercisePlanDto>>(ExcercisePlans);
+            var responseData = new Dictionary<string, object>()
+            {
+                { "data", ExcercisePlanDtos }
+            };
 
-            return Ok(ExcercisePlanDtos);
+            return Ok(responseData);
         }
 
     }
