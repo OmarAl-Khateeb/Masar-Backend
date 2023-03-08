@@ -15,7 +15,7 @@ namespace Core.Specifications
                 (!day.HasValue || x.Day == day)
             )
         {
-            AddInclude(x => x.MealList);
+            AddInclude(x => x.MealList.OrderBy(x=> x.Index));
         }
     }
 }
