@@ -70,9 +70,9 @@ namespace API.Controllers
 
         
         [HttpGet("UserPlans")]
-        public async Task<ActionResult<IReadOnlyList<MealPlanDto>>> GetMealPlansByUserId(int? day)
+        public async Task<ActionResult<IReadOnlyList<MealPlanDto>>> GetMealPlansByUserId()
         {
-            var spec = new MealPlanSpecification(User.GetUserId(), day);
+            var spec = new MealPlanSpecification(User.GetUserId());
 
             var mealPlans = await _unitOfWork.Repository<MealPlan, CourseContext>().ListAsync(spec);
 

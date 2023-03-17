@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Extensions;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -17,8 +18,10 @@ namespace API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork<StoreContext> _unitOfWork;
-        public AdvertController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper)
+        private readonly IUploadService _uploadService;
+        public AdvertController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper, IUploadService uploadService)
         {
+            _uploadService = uploadService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -38,9 +41,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AdvertDto>> GetAdvert(int id)
         {
-            var spec = new BaseSpecification<Advert>(x => x.Id == id);
-
-            var Advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetEntityWithSpec(spec);
+            var Advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetByIdAsync(id);
 
             if (Advert == null) return NotFound(new ApiResponse(404));
 
@@ -51,6 +52,8 @@ namespace API.Controllers
         public async Task<ActionResult<AdvertCDto>> CreateAdvert(AdvertCDto advertDto)
         {
             var advert = _mapper.Map<AdvertCDto, Advert>(advertDto);
+            advert.GymId = User.GetGymId();
+            
              _unitOfWork.Repository<Advert, StoreContext>().Add(advert);
 
             var result = await _unitOfWork.Complete();
@@ -58,6 +61,26 @@ namespace API.Controllers
             if (result <= 0) return BadRequest(new ApiResponse(400, "Failed to Create Advert"));
 
             return Ok(advert);
+        }
+
+        [HttpPost("Upload/{id}")]
+        public async Task<ActionResult> Upload(IFormFile file, int id)
+        {
+            var advert = await  _unitOfWork.Repository<Advert, StoreContext>().GetByIdAsync(id);
+
+            if (advert == null) return NotFound(new ApiResponse(404));
+
+            var uploadFile = await _uploadService.UploadAsync(file, "images/adverts");
+
+            advert.ImageUrl = "images/adverts/" + uploadFile.FileName;
+
+            _unitOfWork.Repository<Advert, StoreContext>().Update(advert);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Advert"));
+            
+            return Ok(new { uploadFile.FileName });
         }
 
         [HttpDelete("{id}")]

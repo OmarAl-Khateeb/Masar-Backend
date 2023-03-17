@@ -12,7 +12,6 @@ namespace API.Dtos
         public string ImageUrl { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int GymId { get; set; }
     }
     public class AdvertCDto
     {
@@ -20,6 +19,5 @@ namespace API.Dtos
         public string ImageUrl { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int GymId { get; set; }
     }
 }

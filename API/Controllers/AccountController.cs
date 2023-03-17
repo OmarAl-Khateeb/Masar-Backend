@@ -18,9 +18,10 @@ namespace API.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            ITokenService tokenService, IMapper mapper)
+        private readonly IUploadService _uploadService;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUploadService uploadService, IMapper mapper)
         {
+            _uploadService = uploadService;
             _mapper = mapper;
             _tokenService = tokenService;
             _signInManager = signInManager;
@@ -80,6 +81,21 @@ namespace API.Controllers
             userdto.Token = _tokenService.CreateToken(user);
             return userdto;
         }
+
+        [HttpPost("Upload/{id}")]
+        public async Task<ActionResult> Upload(IFormFile file, string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var uploadFile = await _uploadService.UploadAsync(file, "images/photos");
+
+            user.PhotoUrl = "images/photos/" + uploadFile.FileName;
+
+            var result = await _userManager.UpdateAsync(user);
+            
+            return Ok(new { uploadFile.FileName });
+        }
+
 
         [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)

@@ -47,7 +47,7 @@ namespace API.Controllers
             
             var subtotal = items.Sum(item => item.Price*item.Quantity);
 
-            var order = new Order(items, User.GetUserId(), User.GetGymId(), subtotal, User.GetUserId(), deliveryMethod);
+            var order = new Order(items, User.GetUserId(), User.GetGymId(), subtotal, "temporary delivery address", deliveryMethod);
 
             _unitOfWork.Repository<Order, StoreContext>().Add(order);
 

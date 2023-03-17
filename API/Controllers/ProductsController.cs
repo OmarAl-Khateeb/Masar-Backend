@@ -17,9 +17,11 @@ namespace API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork<StoreContext> _unitOfWork;
+        private readonly IUploadService _uploadService;
 
-        public ProductsController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper)
+        public ProductsController(IUnitOfWork<StoreContext> unitOfWork, IMapper mapper, IUploadService uploadService)
         {
+            _uploadService = uploadService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -67,6 +69,26 @@ namespace API.Controllers
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Product"));
 
             return Created("test", product);
+        }
+
+        [HttpPost("Upload/{id}")]
+        public async Task<ActionResult> Upload(IFormFile file, int id)
+        {
+            var product = await _unitOfWork.Repository<Product, StoreContext>().GetByIdAsync(id);
+
+            if (product == null) return NotFound(new ApiResponse(404));
+
+            var uploadFile = await _uploadService.UploadAsync(file, "images/products");
+
+            product.PictureUrl = "images/products/" + uploadFile.FileName;
+
+            _unitOfWork.Repository<Product, StoreContext>().Update(product);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Product"));
+            
+            return Ok(new { uploadFile.FileName });
         }
 
         [HttpPut("{id}")]

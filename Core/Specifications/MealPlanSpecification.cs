@@ -8,7 +8,14 @@ namespace Core.Specifications
 {
     public class MealPlanSpecification : BaseSpecification<MealPlan>
     {
-        
+
+        public MealPlanSpecification(string appUserId)
+            : base(x =>
+                (string.IsNullOrEmpty(appUserId) || x.AppUserId == appUserId)
+            )
+        {
+            AddInclude(x => x.MealList.OrderBy(x=> x.Index));
+        }
         public MealPlanSpecification(string appUserId, int? day)
             : base(x =>
                 (string.IsNullOrEmpty(appUserId) || x.AppUserId == appUserId) &&

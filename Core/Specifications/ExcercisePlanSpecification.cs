@@ -17,5 +17,12 @@ namespace Core.Specifications
         {
             AddInclude(x => x.ExcerciseList.OrderBy(x=> x.Index));
         }
+        public ExcercisePlanSpecification(string appUserId)
+            : base(x =>
+                (string.IsNullOrEmpty(appUserId) || x.AppUserId == appUserId)
+            )
+        {
+            AddInclude(x => x.ExcerciseList.OrderBy(x=> x.Index));
+        }
     }
 }

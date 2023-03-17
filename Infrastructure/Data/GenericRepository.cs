@@ -71,10 +71,7 @@ namespace Infrastructure.Data
         {
             var query = SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
 
-            if (!includeDeleted)
-            {
-                query = query.Where(e => !(e.IsDeleted));
-            }
+            if (!includeDeleted) query = query.Where(e => !(e.IsDeleted));
 
             return query;
         }

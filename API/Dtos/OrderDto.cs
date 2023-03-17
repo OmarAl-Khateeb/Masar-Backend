@@ -22,6 +22,7 @@ namespace API.Dtos
         public DateTime OrderDate { get; set; }
         public IReadOnlyList<OrderItemDto> OrderItems { get; set; }
         public string DeliveryMethod { get; set; }
+        public string Address { get; set; }
         public decimal ShippingPrice { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Total { get; set; }

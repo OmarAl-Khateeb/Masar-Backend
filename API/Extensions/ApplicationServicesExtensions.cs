@@ -28,6 +28,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork<StoreContext>, UnitOfWork<StoreContext>>();
             services.AddScoped<IUnitOfWork<CourseContext>, UnitOfWork<CourseContext>>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUploadService, UploadService>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>

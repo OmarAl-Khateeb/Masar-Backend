@@ -70,7 +70,7 @@ namespace API.Controllers
         [HttpGet("UserPlans")]
         public async Task<ActionResult<IReadOnlyList<ExcercisePlanDto>>> GetExcercisePlansByUserId()
         {
-            var spec = new ExcercisePlanSpecification(User.GetUserId(), null);
+            var spec = new ExcercisePlanSpecification(User.GetUserId());
 
             var ExcercisePlans = await _unitOfWork.Repository<ExcercisePlan, CourseContext>().ListAsync(spec);
 
