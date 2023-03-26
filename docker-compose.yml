@@ -1,0 +1,14 @@
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/data
+
+volumes:
+  postgres-data:
