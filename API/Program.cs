@@ -38,19 +38,19 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
+var identityContext = services.GetRequiredService<AppIdentityDbContext>();
 var context = services.GetRequiredService<StoreContext>();
 var course = services.GetRequiredService<CourseContext>();
-var identityContext = services.GetRequiredService<AppIdentityDbContext>();
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
+    await identityContext.Database.MigrateAsync();
     await context.Database.MigrateAsync();
     await course.Database.MigrateAsync();
-    await identityContext.Database.MigrateAsync();
+    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
     await StoreContextSeed.SeedAsync(context);
     await CourseContextSeed.SeedCourseAsync(course);
-    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)
 {
