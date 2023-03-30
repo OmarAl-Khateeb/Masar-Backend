@@ -46,10 +46,10 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
     await identityContext.Database.MigrateAsync();
-    await context.Database.MigrateAsync();
-    await course.Database.MigrateAsync();
     await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
+    await context.Database.MigrateAsync();
     await StoreContextSeed.SeedAsync(context);
+    await course.Database.MigrateAsync();
     await CourseContextSeed.SeedCourseAsync(course);
 }
 catch (Exception ex)
