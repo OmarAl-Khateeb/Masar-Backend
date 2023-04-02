@@ -64,12 +64,6 @@ namespace API.Controllers
                 Email = registerDto.Email,
                 UserName = registerDto.Email,
                 DateOfBirth = DateTime.Today.AddYears(-30),
-                Height = 180,
-                Weight = 100,
-                PhotoUrl = "some/some",
-                GymId = 1,
-                SubscriptionExpDate = DateTime.UtcNow.AddMonths(2),
-                SubscriptionTypeId = 1
                 //temporary
             };
 
@@ -101,15 +95,6 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {
             return await _userManager.FindByEmailAsync(email) != null;
-        }
-
-        [Authorize]
-        [HttpGet("Subscription")]
-        public async Task<ActionResult<SubscriptionDto>> GetUserSubscription()
-        {
-            var user = await _userManager.FindUserByClaimsPrincipleWithSubscription(User);
-
-            return _mapper.Map<SubscriptionType, SubscriptionDto>(user.SubscriptionType);
         }
     }
 }

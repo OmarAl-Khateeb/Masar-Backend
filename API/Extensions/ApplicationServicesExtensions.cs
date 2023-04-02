@@ -2,7 +2,6 @@ using API.Errors;
 using Core.Interfaces;
 using Infrastructue.Data;
 using Infrastructure.Data;
-using Infrastructure.Data.Course;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +18,7 @@ namespace API.Extensions
             {
                 opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
-            services.AddDbContext<CourseContext>(opt =>
-            {
-                opt.UseNpgsql(config.GetConnectionString("CourseConnection"));
-            });
             services.AddScoped<IUnitOfWork<StoreContext>, UnitOfWork<StoreContext>>();
-            services.AddScoped<IUnitOfWork<CourseContext>, UnitOfWork<CourseContext>>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));

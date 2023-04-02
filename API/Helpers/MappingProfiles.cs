@@ -3,9 +3,6 @@ using AutoMapper;
 using Core.Entities;
 using API.Extensions;
 using Core.Entities.Identity;
-using Core.Entities.Meal;
-using Core.Entities.Excercise;
-using Core.Entities.OrderAggregate;
 
 namespace API.Helpers
 {
@@ -13,69 +10,12 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<ProductCDto, Product>();
-            
-            CreateMap<Product, ProductDto>()
-                .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
-                .ForMember(d => d.ProductCategory, o => o.MapFrom(s => s.ProductCategory.Name))
-                .ForMember(d => d.PictureUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.PictureUrl));
-            CreateMap<Address, AddressDto>().ReverseMap();
-            
-            CreateMap<SubscriptionType, SubscriptionDto>().ReverseMap();
-            
-            CreateMap<AdvertCDto, Advert>();
-            CreateMap<Advert, AdvertDto>()
-                .ForMember(d => d.ImageUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.ImageUrl))
-                .ReverseMap();
-            
-            CreateMap<NotificationCDto, Notification>();
-            CreateMap<Notification, NotificationDto>()
-                .ReverseMap();
-            
-            CreateMap<GymCDto, Gym>();
-            CreateMap<Gym, GymDto>()
-                .ReverseMap();
-            
-            CreateMap<MealCDto, Meal>();
-            CreateMap<Meal, MealDto>()
-                .ReverseMap();
-
-            CreateMap<MealCPlanDto, MealPlan>()
-                .ForMember(dest => dest.MealList, opt => opt.MapFrom(src => src.MealList));
-            CreateMap<MealPlanDto, MealPlan>()
-                .ForMember(dest => dest.MealList, opt => opt.MapFrom(src => src.MealList))
-                .ReverseMap();
-            
-            CreateMap<Excercise, ExcerciseDto>()
-                .ReverseMap();
-            
-            CreateMap<ExcerciseCSetDto, ExcerciseSet>();
-            CreateMap<ExcerciseSet, ExcerciseSetDto>()
-                .ReverseMap();
-            
-            CreateMap<OrderCDto, Order>();
-            CreateMap<Order, OrderDto>()
-                .ForMember(d => d.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
-                .ForMember(d => d.ShippingPrice, o => o.MapFrom(s => s.DeliveryMethod.Price));
-
-            CreateMap<OrderItem, OrderItemDto>()
-                .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ProductItemId))
-                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ItemOrdered.ProductName))
-                .ForMember(d => d.PictureUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.ItemOrdered.PictureUrl))
-                .ReverseMap();
-
-            CreateMap<ExcerciseCPlanDto, ExcercisePlan>()
-                .ForMember(dest => dest.ExcerciseList, opt => opt.MapFrom(src => src.ExcerciseList));
-            CreateMap<ExcercisePlanDto, ExcercisePlan>()
-                .ForMember(dest => dest.ExcerciseList, opt => opt.MapFrom(src => src.ExcerciseList))
-                .ReverseMap();
 
             CreateMap<AppUser, UserTokenDto>();
             CreateMap<AppUser, UserDto>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
-                .ForMember(d => d.SubscriptionType, o => o.MapFrom(s => s.SubscriptionType.Name))
                 .ForMember(d => d.PhotoUrl, o =>o.MapFrom<ApiUrlResolver, string>(src => src.PhotoUrl))
-                .ReverseMap();
+            .ReverseMap();
         }
     }
 }

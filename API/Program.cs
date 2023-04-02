@@ -3,7 +3,6 @@ using API.Middleware;
 using Core.Entities.Identity;
 using Infrastructue.Data;
 using Infrastructure.Data;
-using Infrastructure.Data.Course;
 using Infrastructure.Data.Identity;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +39,6 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var identityContext = services.GetRequiredService<AppIdentityDbContext>();
 var context = services.GetRequiredService<StoreContext>();
-var course = services.GetRequiredService<CourseContext>();
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 try
@@ -48,9 +46,7 @@ try
     await identityContext.Database.MigrateAsync();
     await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
     await context.Database.MigrateAsync();
-    await StoreContextSeed.SeedAsync(context);
-    await course.Database.MigrateAsync();
-    await CourseContextSeed.SeedCourseAsync(course);
+    // await StoreContextSeed.SeedAsync(context);
 }
 catch (Exception ex)
 {

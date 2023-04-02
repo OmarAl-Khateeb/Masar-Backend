@@ -10,11 +10,6 @@ namespace Infrastructure.Identity
         {
             if (!userManager.Users.Any())
             {
-                var gym = new Gym
-                {
-                    Name = "GoGym",
-                    ImageUrl = "some/some"
-                };
                 var user = new AppUser
                 {
                     FullName = "Bob",
@@ -23,20 +18,7 @@ namespace Infrastructure.Identity
                     Address = "basmayah",
                     PhoneNumber = "77493829839",
                     DateOfBirth = DateTime.UtcNow.AddYears(-32),
-                    Height = 180,
-                    Weight = 100,
-                    PhotoUrl = "some/some",
-                    GymId = 1,
-                    SubscriptionExpDate = DateTime.UtcNow.AddMonths(1),
 
-                    SubscriptionType = new SubscriptionType
-                    {
-                        Name = "Standard",
-                        Details = "the basic",
-                        Duration = 30,
-                        Price = 30000,
-                        GymId = 1
-                    }
                 };
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 var user2 = new AppUser
@@ -47,12 +29,6 @@ namespace Infrastructure.Identity
                     Address = "bob2@test.com",
                     PhoneNumber = "77493324432",
                     DateOfBirth = DateTime.UtcNow.AddYears(-32),
-                    Height = 180,
-                    Weight = 100,
-                    PhotoUrl = "some/some",
-                    GymId = 1,
-                    SubscriptionExpDate = DateTime.UtcNow.AddMonths(-1),
-                    SubscriptionTypeId = 1
                 };
 
                 await userManager.CreateAsync(user2, "Pa$$w0rd");

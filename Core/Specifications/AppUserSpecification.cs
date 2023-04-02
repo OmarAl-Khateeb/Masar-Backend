@@ -10,12 +10,8 @@ namespace Core.Specifications
     {
         public AppUserSpecification(AppUserSpecParams specParams)
             : base(x =>
-                (string.IsNullOrEmpty(specParams.Search) || x.FullName.ToLower().Contains(specParams.Search)) &&
-                (!specParams.GymId.HasValue || x.GymId == specParams.GymId) &&
-                (!specParams.SubscriptionTypeId.HasValue || x.SubscriptionTypeId == specParams.SubscriptionTypeId) &&
-                (!specParams.SubscriptionExpired || x.SubscriptionExpDate <= DateTime.UtcNow)) // apply the filter based on SubscriptionExpired?
+                (string.IsNullOrEmpty(specParams.Search) || x.FullName.ToLower().Contains(specParams.Search))) // apply the filter based on SubscriptionExpired?
         {
-            AddInclude(x => x.SubscriptionType);
             ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
 
             if (!string.IsNullOrEmpty(specParams.Sort))
@@ -27,12 +23,6 @@ namespace Core.Specifications
                         break;
                     case "created":
                         AddOrderBy(x => x.CreatedAt);
-                        break;
-                    case "expdate":
-                        AddOrderBy(x => x.SubscriptionExpDate);
-                        break;
-                    case "expdatedesc":
-                        AddOrderByDescending(x => x.SubscriptionExpDate);
                         break;
                     default:
                         AddOrderByDescending(x => x.FullName);
@@ -48,7 +38,6 @@ namespace Core.Specifications
         public AppUserSpecification(string id)
             : base(x => x.Id == id)
         {
-            AddInclude(x => x.SubscriptionType);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace API.Extensions
             var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return await userManager.Users
-                .Include(x => x.SubscriptionType)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
