@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Entities.Identity;
 using static API.Entities._Enums;
 
 namespace API.Entities
 {
-    public class Student
+    public class Student : BaseEntity
     {
-        public string Id { get; set; }
         public string FullName { get; set; }
+        public string LastName { get; set; }
         public string MotherFullName { get; set; }
         public string StudentPhotoUrl { get; set; }
         public string Address { get; set; }
@@ -20,14 +21,11 @@ namespace API.Entities
         public string Nationality { get; set; }
         public int ExamNumber { get; set; }
         public int PrepTotal { get; set; }
+        public int Stage { get; set; }
         public double PrepAverage { get; set; }
         public bool IsEvening { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime RegisteredDate { get; set; }
-        public ICollection<Document> Documents { get; set; }
-        public ICollection<Activity> Activities { get; set; }
-        public ICollection<Note> Notes { get; set; }
-        public ICollection<Installment> Installments { get; set; }
         public Genders Gender { get; set; }
         public AdmissionTypes AdmissionType { get; set; }
         public StudentTypes StudentType { get; set; }
@@ -38,8 +36,10 @@ namespace API.Entities
         public Religions Religion { get; set; }
         public Nationalismes Nationalism { get; set; }
         public MartialStatuses MartialStatus { get; set; }
+        public List<Document> Documents { get; set; }
+        public List<Activity> Activities { get; set; }
+        public List<Note> Notes { get; set; }
+        public List<Installment> Installments { get; set; }
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
-        // public int GenderId { get => (int)this.Gender; set =>  Gender = (Genders)value; }// temp for testing
     }
 }

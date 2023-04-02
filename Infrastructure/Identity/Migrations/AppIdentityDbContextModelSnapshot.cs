@@ -53,12 +53,6 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("text");
 
-                    b.Property<int>("GymId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -88,21 +82,12 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("SubscriptionExpDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("SubscriptionTypeId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -113,43 +98,7 @@ namespace Infrastructure.Identity.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("SubscriptionTypeId");
-
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Core.Entities.Identity.SubscriptionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GymId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscriptionType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -282,17 +231,6 @@ namespace Infrastructure.Identity.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
-                {
-                    b.HasOne("Core.Entities.Identity.SubscriptionType", "SubscriptionType")
-                        .WithMany()
-                        .HasForeignKey("SubscriptionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubscriptionType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

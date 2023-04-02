@@ -19,5 +19,7 @@ namespace API.Entities
         public enum Nationalismes { Arabic, Kurdish, Turkmen, Assyrian, Chaldean, Others }
         public enum MartialStatuses { Single, Married, Divorced, Widowed }
         public enum ActivityStatuses { pending, finished, }
+        public enum ChannelTypes { Global, finished, }//need more thoughts
+        public enum TransactionType { Continuoation, Registration, Request}//need more thoughts
     }
 }
