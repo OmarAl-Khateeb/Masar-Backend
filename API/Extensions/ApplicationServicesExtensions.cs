@@ -14,14 +14,14 @@ namespace API.Extensions
             IConfiguration config)
         {
             services.AddEndpointsApiExplorer();
-            services.AddDbContext<StoreContext>(opt =>
-            {
-                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            });
-            services.AddScoped<IUnitOfWork<StoreContext>, UnitOfWork<StoreContext>>();
+            // services.AddDbContext<StoreContext>(opt =>
+            // {
+            //     opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            // });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUploadService, UploadService>();
-            services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>
             {

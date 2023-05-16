@@ -1,3 +1,4 @@
+using API.Helpers;
 using Microsoft.OpenApi.Models;
 
 namespace API.Extensions
@@ -34,6 +35,7 @@ namespace API.Extensions
                 };
 
                 c.AddSecurityRequirement(securityRequirement);
+                c.SchemaFilter<EnumSchemaFilter>();
                 
             });
             return services;

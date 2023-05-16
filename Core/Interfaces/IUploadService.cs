@@ -10,5 +10,6 @@ namespace Core.Interfaces
     public interface IUploadService
     {
         Task<UploadFile> UploadAsync(IFormFile file, string uploadPath);
+        Task<Document> UploadDocumentAsync(IFormFile file);
     }
 }

@@ -1,6 +1,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Infrastructure.Data.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class GenericRepository<T, TContext> : IGenericRepository<T, TContext>
+    public class GenericRepository<T> : IGenericRepository<T>
         where T : BaseEntity
-        where TContext : DbContext
     {
-        private readonly TContext _context;
+        private readonly AppIdentityDbContext _context;
 
-        public GenericRepository(TContext context)
+        public GenericRepository(AppIdentityDbContext context)
         {
             _context = context;
         }

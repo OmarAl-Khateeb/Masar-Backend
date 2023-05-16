@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Entities;
-using static API.Entities._Enums;
+using Core.Entities;
+using static Core.Entities._Enums;
 
 namespace Core.Entities
 {

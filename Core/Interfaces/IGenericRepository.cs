@@ -4,8 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Interfaces
 {
-    public interface IGenericRepository<T, TContext> where T : BaseEntity
-                                                      where TContext : DbContext
+    public interface IGenericRepository<T> where T : BaseEntity
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();

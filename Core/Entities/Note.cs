@@ -1,7 +1,7 @@
 
 using Core.Entities;
-using static API.Entities._Enums;
-namespace API.Entities
+using static Core.Entities._Enums;
+namespace Core.Entities
 {
     public class Note : BaseEntity
     {

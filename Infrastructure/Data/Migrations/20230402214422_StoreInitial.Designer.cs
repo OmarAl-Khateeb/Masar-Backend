@@ -25,7 +25,7 @@ namespace Infrastructure.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("API.Entities.Activity", b =>
+            modelBuilder.Entity("Core.Entities.Activity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("API.Entities.Document", b =>
+            modelBuilder.Entity("Core.Entities.Document", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("API.Entities.Installment", b =>
+            modelBuilder.Entity("Core.Entities.Installment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +144,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Installments");
                 });
 
-            modelBuilder.Entity("API.Entities.Note", b =>
+            modelBuilder.Entity("Core.Entities.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("API.Entities.Student", b =>
+            modelBuilder.Entity("Core.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -409,22 +409,22 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("API.Entities.Activity", b =>
+            modelBuilder.Entity("Core.Entities.Activity", b =>
                 {
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany("Activities")
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Document", b =>
+            modelBuilder.Entity("Core.Entities.Document", b =>
                 {
-                    b.HasOne("API.Entities.Activity", "Activity")
+                    b.HasOne("Core.Entities.Activity", "Activity")
                         .WithMany("Documents")
                         .HasForeignKey("ActivityId");
 
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany("Documents")
                         .HasForeignKey("StudentId");
 
@@ -433,25 +433,25 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Installment", b =>
+            modelBuilder.Entity("Core.Entities.Installment", b =>
                 {
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany("Installments")
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Note", b =>
+            modelBuilder.Entity("Core.Entities.Note", b =>
                 {
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany("Notes")
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Student", b =>
+            modelBuilder.Entity("Core.Entities.Student", b =>
                 {
                     b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
                         .WithMany()
@@ -462,7 +462,7 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Notification", b =>
                 {
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId");
 
@@ -471,19 +471,19 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Transaction", b =>
                 {
-                    b.HasOne("API.Entities.Student", "Student")
+                    b.HasOne("Core.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Activity", b =>
+            modelBuilder.Entity("Core.Entities.Activity", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("API.Entities.Student", b =>
+            modelBuilder.Entity("Core.Entities.Student", b =>
                 {
                     b.Navigation("Activities");
 

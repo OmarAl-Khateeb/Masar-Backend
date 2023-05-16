@@ -5,15 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Data.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class UnitOfWork<TUContext> : IUnitOfWork<TUContext> where TUContext : DbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly TUContext _context;
+        private readonly AppIdentityDbContext _context;
         private Hashtable _repositories;
-        public UnitOfWork(TUContext context)
+        public UnitOfWork(AppIdentityDbContext context)
         {
             _context = context;
         }
@@ -28,9 +29,8 @@ namespace Infrastructure.Data
             _context.Dispose();
         }
 
-        public IGenericRepository<TEntity, TContext> Repository<TEntity, TContext>() 
+        public IGenericRepository<TEntity> Repository<TEntity>() 
             where TEntity : BaseEntity
-            where TContext : DbContext
         {
             if(_repositories == null) _repositories = new Hashtable();
 
@@ -38,13 +38,13 @@ namespace Infrastructure.Data
 
             if(!_repositories.ContainsKey(type))
             {
-                var repositoryType = typeof(GenericRepository<,>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity), typeof(TContext)), _context);
+                var repositoryType = typeof(GenericRepository<>);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
 
                 _repositories.Add(type, repositoryInstance);
             }
 
-            return (IGenericRepository<TEntity,TContext>) _repositories[type];
+            return (IGenericRepository<TEntity>) _repositories[type];
         }
     }
 }

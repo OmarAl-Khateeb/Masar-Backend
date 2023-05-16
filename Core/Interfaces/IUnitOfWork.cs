@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Interfaces
 {
-    public interface IUnitOfWork<TUContext> : IDisposable where TUContext : DbContext
+    public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<TEntity, TContext> Repository<TEntity, TContext>() where TEntity : BaseEntity where TContext : DbContext;
+        IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
         Task<int> Complete();
     }
 }

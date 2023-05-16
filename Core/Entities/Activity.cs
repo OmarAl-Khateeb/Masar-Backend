@@ -1,7 +1,7 @@
 using Core.Entities;
-using static API.Entities._Enums;
+using static Core.Entities._Enums;
 
-namespace API.Entities
+namespace Core.Entities
 {
     public class Activity : BaseEntity
     {
@@ -12,6 +12,6 @@ namespace API.Entities
         public string Tags { get; set; }
         public DateTime DeadLine { get; set; }
         public List<Document> Documents { get; set; }
-        public ActivityStatuses ActivityStatus { get; set; }
+        public Statuses Status { get; set; }
     }
 }

@@ -16,6 +16,17 @@ namespace API.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
                 .ForMember(d => d.PhotoUrl, o =>o.MapFrom<ApiUrlResolver, string>(src => src.PhotoUrl))
             .ReverseMap();
+
+            CreateMap<StudentCDto, Student>();
+            CreateMap<Student, StudentDto>()
+                .ForMember(d => d.StudentPhotoUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.StudentPhotoUrl))
+            .ReverseMap();
+
+            CreateMap<TransactionCDto, Transaction>();
+            CreateMap<Transaction, TransactionDto>()
+                .ForMember(d => d.StudentId, o => o.MapFrom(src => src.StudentId))
+                .ForMember(d => d.DocumentUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.Document.DocumentUrl))
+            .ReverseMap();
         }
     }
 }

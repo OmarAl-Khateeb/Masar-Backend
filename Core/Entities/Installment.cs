@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 
-namespace API.Entities
+namespace Core.Entities
 {
     public class Installment : BaseEntity
     {
