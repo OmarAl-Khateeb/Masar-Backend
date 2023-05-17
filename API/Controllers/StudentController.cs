@@ -20,8 +20,10 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IUnitOfWork _unitOfWork;
-        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IUploadService uploadService)
+        private readonly IImageService _imageService;
+        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IUploadService uploadService, IImageService imageService)
         {
+            _imageService = imageService;
             _unitOfWork = unitOfWork;
             _uploadService = uploadService;
             _mapper = mapper;
@@ -65,9 +67,11 @@ namespace API.Controllers
             
             if (studentCDto.Photo != null)
             {
-                var uploadFile = await _uploadService.UploadAsync(studentCDto.Photo, "students/photos");
+                // var uploadFile = await _uploadService.UploadAsync(studentCDto.Photo, "students/photos");
+                
+                var uploadFile = await _imageService.AddImageAsync(studentCDto.Photo, "students/photos");
 
-                student.StudentPhotoUrl = "images/students/photos/" + uploadFile.FileName;
+                student.StudentPhotoUrl = uploadFile.SecureUrl.AbsoluteUri;
             }// Photo Upload
 
             if (student.AdmissionType == (AdmissionTypes.Direct)) student.IsEvening = true;// evening student check

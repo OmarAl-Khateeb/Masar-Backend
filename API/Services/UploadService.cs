@@ -11,54 +11,54 @@ using Core.Entities;
 namespace Infrastructure.Services
 {
     public class UploadService : IUploadService
-{
-    private readonly IWebHostEnvironment _env;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UploadService(IWebHostEnvironment env, IUnitOfWork unitOfWork)
     {
-            _unitOfWork = unitOfWork;
-        _env = env;
-    }
+        private readonly IWebHostEnvironment _env;
+        private readonly IUnitOfWork _unitOfWork;
 
-    public async Task<UploadFile> UploadAsync(IFormFile file, string uploadPath)
-    {
-        if (file == null || file.Length == 0) throw new ArgumentException("Please select a file to upload.");
-
-        string uploadsFolder = Path.Combine(_env.WebRootPath, uploadPath);
-
-        if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
-    
-        var uploadFile = new UploadFile
+        public UploadService(IWebHostEnvironment env, IUnitOfWork unitOfWork)
         {
-            FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
-        };
-        uploadFile.FilePath = Path.Combine(uploadsFolder, uploadFile.FileName);
+                _unitOfWork = unitOfWork;
+            _env = env;
+        }
 
-        using (var stream = new FileStream(uploadFile.FilePath, FileMode.Create)) await file.CopyToAsync(stream);
+        public async Task<UploadFile> UploadAsync(IFormFile file, string uploadPath)
+        {
+            if (file == null || file.Length == 0) throw new ArgumentException("Please select a file to upload.");
 
-        return (uploadFile);
-    }
+            string uploadsFolder = Path.Combine(_env.WebRootPath, uploadPath);
 
-    public async Task<Document> UploadDocumentAsync(IFormFile file){
+            if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
         
-        var uploadFile = await UploadAsync(file, "students/documents");
+            var uploadFile = new UploadFile
+            {
+                FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
+            };
+            uploadFile.FilePath = Path.Combine(uploadsFolder, uploadFile.FileName);
 
-        // Create a new Document entity.
-        var document = new Document
-        {
-            Name = uploadFile.FileName,
-            DocumentUrl = "images/students/documents/" + uploadFile.FileName,
-            DocumentType = "Transaction",
-            Tags = "",
-            Note = "Student Made Transaction,",
-            // Student = await _unitOfWork.Repository<Student>().GetByIdAsync(StudentId)
-        };
+            using (var stream = new FileStream(uploadFile.FilePath, FileMode.Create)) await file.CopyToAsync(stream);
 
-        // Save the Document entity to the database.
-        _unitOfWork.Repository<Document>().Add(document);
+            return (uploadFile);
+        }
 
-        return document;
+        public async Task<Document> UploadDocumentAsync(IFormFile file){
+            
+            var uploadFile = await UploadAsync(file, "students/documents");
+
+            // Create a new Document entity.
+            var document = new Document
+            {
+                Name = uploadFile.FileName,
+                DocumentUrl = "images/students/documents/" + uploadFile.FileName,
+                DocumentType = "Transaction",
+                Tags = "",
+                Note = "Student Made Transaction,",
+                // Student = await _unitOfWork.Repository<Student>().GetByIdAsync(StudentId)
+            };
+
+            // Save the Document entity to the database.
+            _unitOfWork.Repository<Document>().Add(document);
+
+            return document;
+        }
     }
-}
 }

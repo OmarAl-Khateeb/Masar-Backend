@@ -18,9 +18,11 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageService _imageService;
 
-        public TransactionController(IUnitOfWork unitOfWork, IMapper mapper, IUploadService uploadService)
+        public TransactionController(IUnitOfWork unitOfWork, IMapper mapper, IUploadService uploadService, IImageService imageService)
         {
+            _imageService = imageService;
             _unitOfWork = unitOfWork;
             _uploadService = uploadService;
             _mapper = mapper;
@@ -61,7 +63,8 @@ namespace API.Controllers
 
             if (transactionCDto.File != null)
             {
-                transaction.Document = await _uploadService.UploadDocumentAsync(transactionCDto.File);
+                // transaction.Document = await _uploadService.UploadDocumentAsync(transactionCDto.File);
+                transaction.Document = await _imageService.UploadDocumentAsync(transactionCDto.File, "students/documents");
             }
 
             _unitOfWork.Repository<Transaction>().Add(transaction);

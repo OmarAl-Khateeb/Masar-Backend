@@ -1,4 +1,5 @@
 using API.Errors;
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructue.Data;
 using Infrastructure.Data;
@@ -18,9 +19,11 @@ namespace API.Extensions
             // {
             //     opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             // });
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>
