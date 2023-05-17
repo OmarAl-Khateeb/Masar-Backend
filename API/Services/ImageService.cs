@@ -37,7 +37,7 @@ namespace Infrastructure.Services
                 var acc = new Account
                 (
                     Environment.GetEnvironmentVariable("CS_CloudName"),
-                    Environment.GetEnvironmentVariable("CS_CloudName"),
+                    Environment.GetEnvironmentVariable("CS_ApiKey"),
                     Environment.GetEnvironmentVariable("CS_ApiSecret")
                 );
                 
