@@ -16,17 +16,33 @@ namespace Infrastructure.Services
     {
         private readonly Cloudinary _cloudinary;
         private readonly IUnitOfWork _unitOfWork;
-        public ImageService(IOptions<CloudinarySettings> config, IUnitOfWork unitOfWork)
+        public ImageService(IOptions<CloudinarySettings> config, IUnitOfWork unitOfWork, IWebHostEnvironment environment)
         {
             _unitOfWork = unitOfWork;
-            var acc = new Account
-            (
-                config.Value.CloudName,
-                config.Value.ApiKey,
-                config.Value.ApiSecret
-            );
-
+            
+            
+            if (environment.IsDevelopment())
+            {
+                var acc = new Account
+                (
+                    config.Value.CloudName,
+                    config.Value.ApiKey,
+                    config.Value.ApiSecret
+                );
+                
             _cloudinary = new Cloudinary(acc);
+            }
+            else 
+            {
+                var acc = new Account
+                (
+                    Environment.GetEnvironmentVariable("CS_CloudName"),
+                    Environment.GetEnvironmentVariable("CS_CloudName"),
+                    Environment.GetEnvironmentVariable("CS_ApiSecret")
+                );
+                
+            _cloudinary = new Cloudinary(acc);
+            }
         }
 
         public async Task<ImageUploadResult> AddImageAsync(IFormFile file, string location)
