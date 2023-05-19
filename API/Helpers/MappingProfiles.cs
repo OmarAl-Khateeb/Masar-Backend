@@ -13,20 +13,36 @@ namespace API.Helpers
 
             CreateMap<AppUser, UserTokenDto>();
             CreateMap<AppUser, UserDto>()
-                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalcuateAge()))
-                .ForMember(d => d.PhotoUrl, o =>o.MapFrom(src => src.PhotoUrl))
+                .ForMember(d => d.Age, o => o.MapFrom(s => s.DateOfBirth.CalcuateAge()))
+                .ForMember(d => d.PhotoUrl, o =>o.MapFrom(s => s.PhotoUrl))
             .ReverseMap();
 
             CreateMap<StudentCDto, Student>();
             CreateMap<Student, StudentDto>()
-                .ForMember(d => d.StudentPhotoUrl, o => o.MapFrom(src => src.StudentPhotoUrl))
+                // .ForMember(d => d.StudentPhotoUrl, o => o.MapFrom(s => s.StudentPhotoUrl))
+            .ReverseMap();
+
+            // CreateMap<DocumentCDto, Student>();
+            CreateMap<Document, DocumentDto>()
+            .ReverseMap();
+
+            CreateMap<NotificationCDto, Notification>();
+            CreateMap<Notification, NotificationDto>()
+                .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
+                .ForMember(d => d.DocumentUrl, o => o.MapFrom(s => s.Document.DocumentUrl))
+            .ReverseMap();
+
+            CreateMap<ActivityCDto, Activity>();
+            CreateMap<Activity, ActivityDto>()
+                .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
+                // .ForMember(d => d.Documents, o => o.MapFrom(s => s.Documents))
             .ReverseMap();
 
             CreateMap<TransactionCDto, Transaction>();
             CreateMap<Transaction, TransactionDto>()
-                .ForMember(d => d.StudentId, o => o.MapFrom(src => src.StudentId))
-                // .ForMember(d => d.DocumentUrl, o => o.MapFrom<ApiUrlResolver, string>(src => src.Document.DocumentUrl)) No longer need the resolver for cloudinary use
-                .ForMember(d => d.DocumentUrl, o => o.MapFrom(src => src.Document.DocumentUrl))
+                .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
+                // .ForMember(d => d.DocumentUrl, o => o.MapFrom<ApiUrlResolver, string>(s => s.Document.DocumentUrl)) No longer need the resolver for cloudinary use
+                .ForMember(d => d.DocumentUrl, o => o.MapFrom(s => s.Document.DocumentUrl))
             .ReverseMap();
         }
     }

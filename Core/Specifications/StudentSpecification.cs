@@ -8,7 +8,7 @@ namespace Core.Specifications
             : base(x =>
             (string.IsNullOrEmpty(studentParams.Search) || x.FullName.ToLower().Contains(studentParams.Search)) &&
             (!studentParams.Stage.HasValue || x.Stage == studentParams.Stage) &&
-            (!studentParams.Department.HasValue || (int) x.Department == studentParams.Department)
+            (!studentParams.Department.HasValue || x.Department == studentParams.Department)
             )
         {
             AddInclude(x => x.Documents);
@@ -24,7 +24,7 @@ namespace Core.Specifications
                     // case "priceAsc":
                     //     AddOrderBy(p => p.Price);
                     //     break;
-                    // case "priceDesc":
+                    // case "priceDekkkkkkksc":
                     //     AddOrderByDescending(p => p.Price);
                     //     break; figure out what methods later
                     default:

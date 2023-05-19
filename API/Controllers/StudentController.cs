@@ -18,14 +18,12 @@ namespace API.Controllers
     public class StudentController : BaseApiController
     {
         private readonly IMapper _mapper;
-        private readonly IUploadService _uploadService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
-        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IUploadService uploadService, IImageService imageService)
+        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService)
         {
             _imageService = imageService;
             _unitOfWork = unitOfWork;
-            _uploadService = uploadService;
             _mapper = mapper;
             
         }
@@ -67,8 +65,6 @@ namespace API.Controllers
             
             if (studentCDto.Photo != null)
             {
-                // var uploadFile = await _uploadService.UploadAsync(studentCDto.Photo, "students/photos");
-                
                 var uploadFile = await _imageService.AddImageAsync(studentCDto.Photo, "students/photos");
 
                 student.StudentPhotoUrl = uploadFile.SecureUrl.AbsoluteUri;
@@ -119,24 +115,24 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPost("Upload/{id}")]
-        public async Task<ActionResult> Upload(IFormFile file, int id)
-        {
-            var student = await _unitOfWork.Repository<Student>().GetByIdAsync(id);
+        // [HttpPost("Upload/{id}")]
+        // public async Task<ActionResult> Upload(IFormFile file, int id)
+        // {
+        //     var student = await _unitOfWork.Repository<Student>().GetByIdAsync(id);
 
-            if (student == null) return NotFound(new ApiResponse(404));
+        //     if (student == null) return NotFound(new ApiResponse(404));
 
-            var uploadFile = await _uploadService.UploadAsync(file, "images/students/photos");
+        //     var uploadFile = await _uploadService.UploadAsync(file, "images/students/photos");
 
-            student.StudentPhotoUrl = "images/students/photos/" + uploadFile.FileName;
+        //     student.StudentPhotoUrl = "images/students/photos/" + uploadFile.FileName;
 
-            _unitOfWork.Repository<Student>().Update(student);
+        //     _unitOfWork.Repository<Student>().Update(student);
 
-            var result = await _unitOfWork.Complete();
+        //     var result = await _unitOfWork.Complete();
 
-            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Product"));
+        //     if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Product"));
             
-            return Ok(new { uploadFile.FileName });
-        }
+        //     return Ok(new { uploadFile.FileName });
+        // }
     }
 }

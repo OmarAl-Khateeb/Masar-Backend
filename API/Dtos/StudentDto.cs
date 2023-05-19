@@ -10,6 +10,8 @@ namespace API.Dtos
 {
     public class StudentDto
     {
+        public int Id { get; set; }
+        public DateTime CreatedDate { get; set; }
         public string FullName { get; set; }
         public string LastName { get; set; }
         public string MotherFullName { get; set; }
@@ -37,8 +39,8 @@ namespace API.Dtos
         public Religions Religion { get; set; }
         public Nationalismes Nationalism { get; set; }
         public MartialStatuses MartialStatus { get; set; }
-        // public List<Document> Documents { get; set; }
-        // public List<Activity> Activities { get; set; }
+        public List<DocumentDto> Documents { get; set; }
+        public List<ActivityDto> Activities { get; set; }
         // public List<Note> Notes { get; set; }
         // public List<Installment> Installments { get; set; }
         // public AppUser AppUser { get; set; }

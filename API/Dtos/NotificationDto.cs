@@ -7,21 +7,26 @@ using static Core.Entities._Enums;
 
 namespace API.Dtos
 {
-    public class TransactionDto
+    public class NotificationDto
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
+        public Student Student { get; set; }
         public int StudentId { get; set; }
-        public string RollerId { get; set; }
         public string DocumentUrl { get; set; }
-        public TransactionType Type { get; set; }
-        public Statuses Status { get; set; }
+        public Departments Department { get; set; }
+        public int Stage { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
         
     }
-    public class TransactionCDto
+    public class NotificationCDto
     {
         public int StudentId { get; set; }
-        public TransactionType Type { get; set; } 
+        public Departments Department { get; set; }
+        public int Stage { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
         
         [SwaggerFileUpload]
         public IFormFile File { get; set; }

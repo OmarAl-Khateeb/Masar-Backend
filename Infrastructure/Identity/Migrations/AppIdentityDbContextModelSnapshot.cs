@@ -51,7 +51,7 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StudentId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Tags")
@@ -261,16 +261,22 @@ namespace Infrastructure.Identity.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChannelType")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Department")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DocumentId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("StudentId")
+                    b.Property<int>("Stage")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Subject")
@@ -280,6 +286,8 @@ namespace Infrastructure.Identity.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
 
                     b.HasIndex("StudentId");
 
@@ -414,7 +422,7 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StudentId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Type")
@@ -565,7 +573,9 @@ namespace Infrastructure.Identity.Migrations
                 {
                     b.HasOne("Core.Entities.Student", "Student")
                         .WithMany("Activities")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Student");
                 });
@@ -603,9 +613,17 @@ namespace Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Core.Entities.Notification", b =>
                 {
+                    b.HasOne("Core.Entities.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId");
+
                     b.HasOne("Core.Entities.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
 
                     b.Navigation("Student");
                 });
@@ -627,7 +645,9 @@ namespace Infrastructure.Identity.Migrations
 
                     b.HasOne("Core.Entities.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Document");
 
