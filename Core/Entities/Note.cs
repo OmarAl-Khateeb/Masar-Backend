@@ -8,6 +8,8 @@ namespace Core.Entities
         public string Title { get; set; }
         public string Subject { get; set; }
         public Student Student { get; set; }
-        public UserType AssignedTo { get; set; }
+        public int StudentId { get; set; }
+        
+        // public UserType AssignedTo { get; set; }//should this even be a thing 
     }
 }

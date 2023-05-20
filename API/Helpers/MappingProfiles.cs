@@ -23,7 +23,12 @@ namespace API.Helpers
             .ReverseMap();
 
             // CreateMap<DocumentCDto, Student>();
+            CreateMap<DocumentCDto, Document>();
             CreateMap<Document, DocumentDto>()
+            .ReverseMap();
+
+            CreateMap<NoteCDto, Note>();
+            CreateMap<Note, NoteDto>()
             .ReverseMap();
 
             CreateMap<NotificationCDto, Notification>();

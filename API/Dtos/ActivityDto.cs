@@ -17,7 +17,7 @@ namespace API.Dtos
         public string Note { get; set; }
         public string Tags { get; set; }
         public DateTime DeadLine { get; set; }
-        public List<Document> Documents { get; set; }
+        public List<DocumentDto> Documents { get; set; }
         public Statuses Status { get; set; }
         
     }

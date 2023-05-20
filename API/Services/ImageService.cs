@@ -73,10 +73,8 @@ namespace Infrastructure.Services
             {
                 Name = uploadFile.PublicId,
                 DocumentUrl = uploadFile.SecureUrl.AbsoluteUri,
-                DocumentType = "Transaction",
-                Tags = "",
-                Note = "Student Made Transaction,",
                 // Student = await _unitOfWork.Repository<Student>().GetByIdAsync(StudentId)
+                // need to see how to deal with document type/tags/note
             };
 
             // Save the Document entity to the database.

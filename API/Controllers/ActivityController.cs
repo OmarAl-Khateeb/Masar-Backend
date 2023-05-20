@@ -83,7 +83,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Activity>> UpdateActivity(int id, ActivityCDto ActivityCDto)
+        public async Task<ActionResult<ActivityDto>> UpdateActivity(int id, ActivityCDto ActivityCDto)
         {
             var Activity = await _unitOfWork.Repository<Activity>().GetByIdAsync(id);
 
@@ -97,7 +97,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Activity"));
 
-            return Ok(Activity);
+            return Ok(_mapper.Map<Activity, ActivityDto>(Activity));
         }
 
         [HttpDelete("{id}")]

@@ -268,7 +268,6 @@ namespace Infrastructure.Identity.Migrations
                     Title = table.Column<string>(type: "text", nullable: true),
                     Subject = table.Column<string>(type: "text", nullable: true),
                     StudentId = table.Column<int>(type: "integer", nullable: true),
-                    AssignedTo = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },

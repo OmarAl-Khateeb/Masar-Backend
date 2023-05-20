@@ -11,7 +11,8 @@ namespace API.Dtos
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public Student Student { get; set; }
+        
+        // public Student Student { get; set; }
         public int StudentId { get; set; }
         public string DocumentUrl { get; set; }
         public Departments Department { get; set; }

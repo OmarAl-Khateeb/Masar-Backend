@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,5 +16,18 @@ namespace API.Dtos
         public int StudentId { get; set; }
         public string Tags { get; set; }
         public string Note { get; set; }
+    }
+    public class DocumentCDto
+    {
+        // public string Name { get; set; }
+        //asset id vs name?
+        public string DocumentType { get; set; }
+        public int StudentId { get; set; }
+        public string Tags { get; set; }
+        public string Note { get; set; }
+        
+        [SwaggerFileUpload]
+        [Required(ErrorMessage = "Please upload a file")]
+        public IFormFile File { get; set; }
     }
 }

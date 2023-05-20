@@ -53,12 +53,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Transaction>> CreateTransaction([FromForm] TransactionCDto transactionCDto)
+        public async Task<ActionResult<TransactionDto>> CreateTransaction([FromForm] TransactionCDto transactionCDto)
         {
             var transaction = _mapper.Map<TransactionCDto, Transaction>(transactionCDto);
 
             transaction.Student = await _unitOfWork.Repository<Student>().GetByIdAsync(transactionCDto.StudentId);
-
+            //add student id to the post request
             if (transactionCDto.File != null) transaction.Document = await _imageService.UploadDocumentAsync(transactionCDto.File, "students/documents");
 
             _unitOfWork.Repository<Transaction>().Add(transaction);
@@ -71,7 +71,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Transaction>> UpdateTransaction(int id, TransactionCDto transactionCDto)
+        public async Task<ActionResult<TransactionDto>> UpdateTransaction(int id, TransactionCDto transactionCDto)
         {
             var transaction = await _unitOfWork.Repository<Transaction>().GetByIdAsync(id);
 
@@ -85,7 +85,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Transaction"));
 
-            return Ok(transaction);
+            return Ok(_mapper.Map<Transaction, TransactionDto>(transaction));
         }
 
         [HttpDelete("{id}")]
@@ -104,5 +104,4 @@ namespace API.Controllers
             return NoContent();
         }
     }
-
 }
