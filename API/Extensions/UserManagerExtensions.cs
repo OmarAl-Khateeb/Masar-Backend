@@ -11,7 +11,7 @@ namespace API.Extensions
         public static async Task<AppUser> FindUserByClaimsPrincipleWithSubscription(this UserManager<AppUser> userManager, 
             ClaimsPrincipal user)
         {
-            var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var id = int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             return await userManager.Users
                 .SingleOrDefaultAsync(x => x.Id == id);
@@ -20,8 +20,10 @@ namespace API.Extensions
         public static async Task<AppUser> FindByEmailFromClaimsPrincipal(this UserManager<AppUser> userManager, 
             ClaimsPrincipal user)
         {
+            var id = int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
             return await userManager.Users
-                .SingleOrDefaultAsync(x => x.Id == user.FindFirstValue(ClaimTypes.NameIdentifier));
+                .SingleOrDefaultAsync(x => x.Id ==id);
         }
     }
 }

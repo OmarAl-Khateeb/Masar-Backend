@@ -15,12 +15,14 @@ namespace Core.Specifications
             )
         {
             AddInclude(x => x.Document);
+            AddInclude(x => x.User);
             
         }
 
         public NotificationSpecification(int id) : base(x => x.Id == id)
         {
             AddInclude(x => x.Document);
+            AddInclude(x => x.User);
         }
     }
 }

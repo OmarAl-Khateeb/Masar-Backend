@@ -8,10 +8,20 @@ namespace Infrastructure.Identity
 {
     public class AppIdentityDbContextSeed
     {
-        public static async Task SeedUsersAsync(UserManager<AppUser> userManager)
+        public static async Task SeedUsersAsync(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             if (!userManager.Users.Any())
             {
+                var roles = new List<AppRole>
+                {
+                    new AppRole{Name = "Student"},
+                    new AppRole{Name = "Admin"},
+                    new AppRole{Name = "Moderator"},
+                };
+                foreach (var role in roles)
+                {
+                    await roleManager.CreateAsync(role);
+                }
                 var user = new AppUser
                 {
                     FullName = "Bob",
@@ -23,6 +33,7 @@ namespace Infrastructure.Identity
 
                 };
                 await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user, "Student");
                 var user2 = new AppUser
                 {
                     FullName = "Bob2",
@@ -34,6 +45,7 @@ namespace Infrastructure.Identity
                 };
 
                 await userManager.CreateAsync(user2, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user2, "Admin");
             }
         }
         

@@ -35,6 +35,7 @@ namespace API.Helpers
             CreateMap<Notification, NotificationDto>()
                 .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
                 .ForMember(d => d.DocumentUrl, o => o.MapFrom(s => s.Document.DocumentUrl))
+                .ForMember(d => d.RollerName, o => o.MapFrom(s => s.User.UserName))
             .ReverseMap();
 
             CreateMap<ActivityCDto, Activity>();

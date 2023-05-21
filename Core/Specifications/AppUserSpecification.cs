@@ -35,7 +35,7 @@ namespace Core.Specifications
             }
         }
 
-        public AppUserSpecification(string id)
+        public AppUserSpecification(int id)
             : base(x => x.Id == id)
         {
         }

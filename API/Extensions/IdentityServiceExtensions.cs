@@ -22,6 +22,8 @@ namespace API.Extensions
             {
                 // add identity options here
             })
+            .AddRoles<AppRole>()
+            .AddRoleManager<RoleManager<AppRole>>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddSignInManager<SignInManager<AppUser>>();
 
@@ -41,7 +43,7 @@ namespace API.Extensions
             services.AddAuthorization(opt => 
             {
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                opt.AddPolicy("RequireCaptainRole", policy => policy.RequireRole("Admin", "Captain"));
+                opt.AddPolicy("RequireModeratorRole", policy => policy.RequireRole("Admin", "Moderator"));
             });
 
             return services;

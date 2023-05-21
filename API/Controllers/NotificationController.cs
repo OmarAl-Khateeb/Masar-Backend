@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,9 +21,11 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public NotificationController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService)
+        public NotificationController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService, UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
             _imageService = imageService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -55,9 +60,12 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Notification>> CreateNotification([FromForm] NotificationCDto NotificationCDto)
         {
+            var user = await _userManager.FindByEmailFromClaimsPrincipal(User);
+
             var Notification = _mapper.Map<NotificationCDto, Notification>(NotificationCDto);
 
             Notification.Student = await _unitOfWork.Repository<Student>().GetByIdAsync(NotificationCDto.StudentId);
+            Notification.User = user;
 
             if (NotificationCDto.File != null) Notification.Document = await _imageService.UploadDocumentAsync(NotificationCDto.File, "students/documents");
 

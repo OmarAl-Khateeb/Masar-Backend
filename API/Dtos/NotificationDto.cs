@@ -15,6 +15,7 @@ namespace API.Dtos
         // public Student Student { get; set; }
         public int StudentId { get; set; }
         public string DocumentUrl { get; set; }
+        public string RollerName { get; set; }
         public Departments Department { get; set; }
         public int Stage { get; set; }
         public string Title { get; set; }

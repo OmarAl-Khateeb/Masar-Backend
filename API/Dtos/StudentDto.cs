@@ -41,9 +41,9 @@ namespace API.Dtos
         public MartialStatuses MartialStatus { get; set; }
         public List<DocumentDto> Documents { get; set; }
         public List<ActivityDto> Activities { get; set; }
-        // public List<Note> Notes { get; set; }
+        public List<NoteDto> Notes { get; set; }
         // public List<Installment> Installments { get; set; }
-        // public AppUser AppUser { get; set; }
+        public UserDto AppUser { get; set; }
         
     }
 }

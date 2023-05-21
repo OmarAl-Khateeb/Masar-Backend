@@ -16,7 +16,8 @@ namespace Infrastructure.Identity.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
@@ -30,7 +31,8 @@ namespace Infrastructure.Identity.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FullName = table.Column<string>(type: "text", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
                     PhotoUrl = table.Column<string>(type: "text", nullable: true),
@@ -62,7 +64,7 @@ namespace Infrastructure.Identity.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -83,7 +85,7 @@ namespace Infrastructure.Identity.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -105,7 +107,7 @@ namespace Infrastructure.Identity.Migrations
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     ProviderKey = table.Column<string>(type: "text", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,8 +124,8 @@ namespace Infrastructure.Identity.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    RoleId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,7 +148,7 @@ namespace Infrastructure.Identity.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)
@@ -195,7 +197,7 @@ namespace Infrastructure.Identity.Migrations
                     Religion = table.Column<int>(type: "integer", nullable: false),
                     Nationalism = table.Column<int>(type: "integer", nullable: false),
                     MartialStatus = table.Column<int>(type: "integer", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: true),
+                    AppUserId = table.Column<int>(type: "integer", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -267,7 +269,7 @@ namespace Infrastructure.Identity.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true),
                     Subject = table.Column<string>(type: "text", nullable: true),
-                    StudentId = table.Column<int>(type: "integer", nullable: true),
+                    StudentId = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -278,7 +280,8 @@ namespace Infrastructure.Identity.Migrations
                         name: "FK_Notes_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -320,6 +323,7 @@ namespace Infrastructure.Identity.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DocumentId = table.Column<int>(type: "integer", nullable: true),
                     StudentId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     Department = table.Column<int>(type: "integer", nullable: false),
                     Stage = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
@@ -330,6 +334,12 @@ namespace Infrastructure.Identity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notifications_Documents_DocumentId",
                         column: x => x.DocumentId,
@@ -444,6 +454,11 @@ namespace Infrastructure.Identity.Migrations
                 name: "IX_Notifications_StudentId",
                 table: "Notifications",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_AppUserId",
