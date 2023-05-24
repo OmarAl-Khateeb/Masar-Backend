@@ -16,6 +16,6 @@ namespace Core.Entities
         public TransactionType Type { get; set; }
         public int TypeId { get; set; }
         public Statuses Status { get; set; }
-        public int Index { get; set; } = 0;
+        public int Index { get; set; }
     }
 }

@@ -124,5 +124,21 @@ namespace API.Controllers
 
             return Created("test", _mapper.Map<TransactionType, TransactionTypeDto>(transactionType));
         }
+
+        [HttpDelete("Types{id}")]
+        public async Task<ActionResult> DeleteTypeTransaction(int id)
+        {
+            var transactionType = await _unitOfWork.Repository<TransactionType>().GetByIdAsync(id);
+
+            if (transactionType == null) return NotFound(new ApiResponse(404));
+
+            _unitOfWork.Repository<TransactionType>().Delete(transactionType);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Deleting Transaction"));
+
+            return NoContent();
+        }
     }
 }
