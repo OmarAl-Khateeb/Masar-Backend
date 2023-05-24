@@ -9,10 +9,9 @@ namespace Core.Specifications
     public class ActivitySpecification : BaseSpecification<Activity>
     {
         public ActivitySpecification(ActivitySpecParams ActivityParams)
-            : base(x => 
+            : base()
             // (!ActivityParams.Type.HasValue || (int) x.Type == ActivityParams.Type) &&
-            (!ActivityParams.Status.HasValue || (int) x.Status == ActivityParams.Status)
-            )
+            // (!ActivityParams.Status.HasValue || (int) x.Status == ActivityParams.Status)
         {
             AddInclude(x => x.Documents.OrderBy(x=> x.Id));
         }

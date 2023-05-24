@@ -69,6 +69,21 @@ namespace API.Controllers
 
                 student.StudentPhotoUrl = uploadFile.SecureUrl.AbsoluteUri;
             }// Photo Upload
+            
+            if (studentCDto.IdCard != null) {
+                var IdCard = await _imageService.UploadDocumentAsync(studentCDto.IdCard, "students/documents");
+                IdCard.DocumentType="IDCard";
+            }
+            
+            if (studentCDto.AddressCard != null) {
+                var AddressCard = await _imageService.UploadDocumentAsync(studentCDto.AddressCard, "students/documents");
+                AddressCard.DocumentType="AddressCard";
+            }
+            
+            if (studentCDto.RationCard != null) {
+                var RationCard = await _imageService.UploadDocumentAsync(studentCDto.RationCard, "students/documents");
+                RationCard.DocumentType="RationCard";
+            }
 
             if (student.AdmissionType == (AdmissionTypes.Direct)) student.IsEvening = true;// evening student check
 

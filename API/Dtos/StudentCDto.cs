@@ -16,7 +16,7 @@ namespace API.Dtos
         public string FullName { get; set; }
         public string LastName { get; set; }
         public string MotherFullName { get; set; }
-        public string Address { get; set; }
+        // public string Address { get; set; }
         public string EmailAddress { get; set; }
         public string BirthPlace { get; set; }
         public string SchoolName { get; set; }
@@ -42,6 +42,9 @@ namespace API.Dtos
         [SwaggerFileUpload]
         [Required(ErrorMessage = "Please upload a file")]
         public IFormFile Photo { get; set; }
+        public IFormFile IdCard { get; set; }
+        public IFormFile AddressCard { get; set; }
+        public IFormFile RationCard { get; set; }
         
     }
 }
