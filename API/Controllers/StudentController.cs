@@ -41,8 +41,8 @@ namespace API.Controllers
 
             var data = _mapper.Map<IReadOnlyList<StudentDto>>(students);
 
-            return Ok(new Pagination<StudentDto>(studentParams.PageIndex,
-                studentParams.PageSize, totalItems, data));
+            return Ok(new ApiResponse(200, new Pagination<StudentDto>(studentParams.PageIndex,
+                studentParams.PageSize, totalItems, data)));
         }
         
 
@@ -53,7 +53,7 @@ namespace API.Controllers
 
             if (student == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Student, StudentDto>(student);
+            return  Ok(new ApiResponse(200, _mapper.Map<Student, StudentDto>(student)));
         }
         [HttpPost]
         public async Task<ActionResult<Student>> CreateStudent([FromForm] StudentCDto studentCDto)
@@ -84,6 +84,7 @@ namespace API.Controllers
                 var RationCard = await _imageService.UploadDocumentAsync(studentCDto.RationCard, "students/documents");
                 RationCard.DocumentType="RationCard";
             }
+            //change this to false returns
 
             if (student.AdmissionType == (AdmissionTypes.Direct)) student.IsEvening = true;// evening student check
 
@@ -93,7 +94,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Student"));
 
-            return Created("test", student);
+            return Created("test", new ApiResponse(200, student));
         }
 
         [HttpPut("{id}")]
@@ -111,7 +112,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Student"));
 
-            return Ok(student);
+            return Ok(new ApiResponse(200, student));
         }
 
         [HttpDelete("{id}")]

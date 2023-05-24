@@ -38,8 +38,8 @@ namespace API.Controllers
 
             var data = _mapper.Map<IReadOnlyList<DocumentDto>>(Documents);
 
-            return Ok(new Pagination<DocumentDto>(DocumentParams.PageIndex,
-                DocumentParams.PageSize, totalItems, data));
+            return Ok(new ApiResponse(200, new Pagination<DocumentDto>(DocumentParams.PageIndex,
+                DocumentParams.PageSize, totalItems, data)));
         }
 
         [HttpGet("{id}")]
@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (Document == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Document, DocumentDto>(Document);
+            return Ok(new ApiResponse(200, _mapper.Map<Document, DocumentDto>(Document)));
         }
 
         [HttpPost]
@@ -73,7 +73,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Document"));
 
-            return Created("test", _mapper.Map<Document, DocumentDto>(Document));
+            return Created("test", new ApiResponse(201, _mapper.Map<Document, DocumentDto>(Document)));
         }
 
         [HttpPut("{id}")]
@@ -91,7 +91,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Document"));
 
-            return Ok( _mapper.Map<Document, DocumentDto>(Document));
+            return Ok( new ApiResponse(200, _mapper.Map<Document, DocumentDto>(Document)));
         }
 
         [HttpDelete("{id}")]

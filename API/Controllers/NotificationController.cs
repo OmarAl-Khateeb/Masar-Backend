@@ -43,8 +43,8 @@ namespace API.Controllers
 
             var data = _mapper.Map<IReadOnlyList<NotificationDto>>(Notifications);
 
-            return Ok(new Pagination<NotificationDto>(NotificationParams.PageIndex,
-                NotificationParams.PageSize, totalItems, data));
+            return Ok(new ApiResponse(200, new Pagination<NotificationDto>(NotificationParams.PageIndex,
+                NotificationParams.PageSize, totalItems, data)));
         }
 
         [HttpGet("{id}")]
@@ -54,7 +54,7 @@ namespace API.Controllers
 
             if (Notification == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Notification, NotificationDto>(Notification);
+            return Ok(new ApiResponse(200, _mapper.Map<Notification, NotificationDto>(Notification)));
         }
 
         [HttpPost]
@@ -75,7 +75,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Notification"));
 
-            return Created("test", _mapper.Map<Notification, NotificationDto>(Notification));
+            return Created("test", new ApiResponse(201, _mapper.Map<Notification, NotificationDto>(Notification)));
         }
 
         [HttpPut("{id}")]
@@ -93,7 +93,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Notification"));
 
-            return Ok(Notification);
+            return Ok(new ApiResponse(200, Notification));
         }
 
         [HttpDelete("{id}")]
@@ -112,5 +112,4 @@ namespace API.Controllers
             return NoContent();
         }
     }
-
 }

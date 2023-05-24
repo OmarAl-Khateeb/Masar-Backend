@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (Note == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Note, NoteDto>(Note);
+            return Ok(new ApiResponse(200, _mapper.Map<Note, NoteDto>(Note)));
         }
 
         
@@ -64,7 +64,7 @@ namespace API.Controllers
 
             var NoteDto = _mapper.Map<IReadOnlyList<Note>, IReadOnlyList<NoteDto>>(Note);
 
-            return Ok(NoteDto);
+            return Ok(new ApiResponse(200, NoteDto));
         }
 
         [HttpPost]
@@ -80,7 +80,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Note"));
 
-            return Created("test", _mapper.Map<Note, NoteDto>(Note));
+            return Created("test", new ApiResponse(201, _mapper.Map<Note, NoteDto>(Note)));
         }
 
         [HttpPut("{id}")]
@@ -98,7 +98,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Note"));
 
-            return Ok(_mapper.Map<Note, NoteDto>(Note));
+            return Ok(new ApiResponse(200, _mapper.Map<Note, NoteDto>(Note)));
         }
 
         [HttpDelete("{id}")]

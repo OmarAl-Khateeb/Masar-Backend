@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (Activity == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Activity, ActivityDto>(Activity);
+            return Ok(new ApiResponse(200, _mapper.Map<Activity, ActivityDto>(Activity)));
         }
 
         [HttpPost]
@@ -79,7 +79,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Activity"));
 
-            return Created("test", _mapper.Map<Activity, ActivityDto>(Activity));
+            return Created("test", new ApiResponse(201, _mapper.Map<Activity, ActivityDto>(Activity)));
         }
 
         [HttpPut("{id}")]
@@ -97,7 +97,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Activity"));
 
-            return Ok(_mapper.Map<Activity, ActivityDto>(Activity));
+            return Ok(new ApiResponse(200, _mapper.Map<Activity, ActivityDto>(Activity)));
         }
 
         [HttpDelete("{id}")]
