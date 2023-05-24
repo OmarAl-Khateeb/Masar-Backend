@@ -10,7 +10,7 @@ namespace Core.Specifications
     {
         public TransactionSpecification(TransactionSpecParams transactionParams)
             : base(x => 
-            (!transactionParams.Type.HasValue || (int) x.Type == transactionParams.Type) &&
+            (!transactionParams.Type.HasValue || (int) x.TypeId == transactionParams.Type) &&
             (!transactionParams.Status.HasValue || (int) x.Status == transactionParams.Status)
             )
         {

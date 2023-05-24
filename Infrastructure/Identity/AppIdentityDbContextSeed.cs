@@ -53,6 +53,17 @@ namespace Infrastructure.Identity
         {
             if (!context.Students.Any())
             {
+                List<string>  Steps = new List<string>();
+                Steps.Add("Hello");
+                Steps.Add("World");
+                Steps.Add("OpenAI");
+                Steps.Add("C#");
+                var transactiontype = new TransactionType
+                {
+                    Name = "Registration",
+                    
+                    Steps = new List<string>(Steps),
+                };
                 var students = new List<Student>
                 {
                     new Student
@@ -116,6 +127,7 @@ namespace Infrastructure.Identity
                     // add more students as necessary
                 };
 
+                context.TransactionTypes.AddRange(transactiontype);
                 context.Students.AddRange(students);
                 await context.SaveChangesAsync();
             }

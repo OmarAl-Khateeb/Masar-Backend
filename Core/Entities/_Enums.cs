@@ -20,6 +20,6 @@ namespace Core.Entities
         public enum MartialStatuses { Single, Married, Divorced, Widowed }
         public enum Statuses { Pending, Finished, Dropped}
         public enum ChannelTypes { Global, finished, }//need more thoughts
-        public enum TransactionType { Continuation, Registration, Request}//need more thoughts
+        // public enum TransactionType { Continuation, Registration, Request}//need more thoughts
     }
 }

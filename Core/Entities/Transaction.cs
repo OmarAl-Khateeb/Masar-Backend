@@ -14,6 +14,8 @@ namespace Core.Entities
         public string RollerId { get; set; }
         public Document Document { get; set; }
         public TransactionType Type { get; set; }
+        public int TypeId { get; set; }
         public Statuses Status { get; set; }
+        public int Index { get; set; } = 0;
     }
 }

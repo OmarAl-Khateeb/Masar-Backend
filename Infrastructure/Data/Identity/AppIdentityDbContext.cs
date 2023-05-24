@@ -20,6 +20,7 @@ namespace Infrastructure.Data.Identity
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionType> TransactionTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

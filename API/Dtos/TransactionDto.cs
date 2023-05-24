@@ -16,12 +16,15 @@ namespace API.Dtos
         public string DocumentUrl { get; set; }
         public TransactionType Type { get; set; }
         public Statuses Status { get; set; }
+        public int Index { get; set; }
         
     }
     public class TransactionCDto
     {
         public int StudentId { get; set; }
-        public TransactionType Type { get; set; } 
+
+        // public TransactionType Type { get; set; } 
+        public int TypeId { get; set; } 
         
         [SwaggerFileUpload]
         public IFormFile File { get; set; }

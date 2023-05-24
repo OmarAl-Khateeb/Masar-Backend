@@ -103,5 +103,26 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("Types")]
+        public async Task<ActionResult<IReadOnlyList<TransactionTypeDto>>> GetransactionTypes()
+        {
+            var transactiontype = await _unitOfWork.Repository<TransactionType>().ListAllAsync();
+            return Ok(_mapper.Map<IReadOnlyList<TransactionType>, IReadOnlyList<TransactionTypeDto>>(transactiontype));
+        }
+
+        [HttpPost("Types")]
+        public async Task<ActionResult<TransactionTypeDto>> CreateTransactionType(TransactionTypeCDto transactionTypeCDto)
+        {
+            var transactionType = _mapper.Map<TransactionTypeCDto, TransactionType>(transactionTypeCDto);
+
+            _unitOfWork.Repository<TransactionType>().Add(transactionType);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Transaction"));
+
+            return Created("test", _mapper.Map<TransactionType, TransactionTypeDto>(transactionType));
+        }
     }
 }
