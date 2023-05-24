@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (transaction == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Transaction, TransactionDto>(transaction);
+            return Ok(new ApiResponse(200, _mapper.Map<Transaction, TransactionDto>(transaction)));
         }
 
         [HttpPost]
@@ -67,7 +67,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Transaction"));
 
-            return Created("test", _mapper.Map<Transaction, TransactionDto>(transaction));
+            return Created( "test", new ApiResponse(201,  _mapper.Map<Transaction, TransactionDto>(transaction)));
         }
 
         [HttpPut("{id}")]
@@ -85,7 +85,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Transaction"));
 
-            return Ok(_mapper.Map<Transaction, TransactionDto>(transaction));
+            return Ok(new ApiResponse(200, _mapper.Map<Transaction, TransactionDto>(transaction)));
         }
 
         [HttpDelete("{id}")]
@@ -122,7 +122,7 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Transaction"));
 
-            return Created("test", _mapper.Map<TransactionType, TransactionTypeDto>(transactionType));
+            return Created("test", new ApiResponse(201,  _mapper.Map<TransactionType, TransactionTypeDto>(transactionType)));
         }
 
         [HttpDelete("Types{id}")]

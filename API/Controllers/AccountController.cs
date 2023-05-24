@@ -52,7 +52,7 @@ namespace API.Controllers
 
             userdto.Token = _tokenService.CreateToken(user);
 
-            return userdto;
+            return Ok(new ApiResponse(200, userdto));
         }
 
         [HttpPost("register")]
@@ -73,7 +73,7 @@ namespace API.Controllers
 
             var userdto = _mapper.Map<AppUser, UserTokenDto>(user);
             userdto.Token = _tokenService.CreateToken(user);
-            return userdto;
+            return Ok(new ApiResponse(200, userdto));
         }
 
         [HttpPost("Upload/{id}")]
