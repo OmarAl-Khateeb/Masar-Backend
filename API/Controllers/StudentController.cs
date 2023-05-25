@@ -40,9 +40,10 @@ namespace API.Controllers
             var students = await _unitOfWork.Repository<Student>().ListAsync(spec);
 
             var data = _mapper.Map<IReadOnlyList<StudentDto>>(students);
+            var pageData = new Pagination<StudentDto>(studentParams.PageIndex,
+                studentParams.PageSize, totalItems, data);
 
-            return Ok(new ApiResponse(200, new Pagination<StudentDto>(studentParams.PageIndex,
-                studentParams.PageSize, totalItems, data)));
+            return Ok(new ApiResponse(200, pageData));
         }
         
 
