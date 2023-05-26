@@ -37,9 +37,9 @@ namespace API.Controllers
             var Activitys = await _unitOfWork.Repository<Activity>().ListAsync(spec);
 
             var data = _mapper.Map<IReadOnlyList<ActivityDto>>(Activitys);
+            var pageData = new Pagination<ActivityDto>(ActivityParams.PageIndex, ActivityParams.PageSize, totalItems, data);
 
-            return Ok(new Pagination<ActivityDto>(ActivityParams.PageIndex,
-                ActivityParams.PageSize, totalItems, data));
+            return Ok(new ApiResponse(200, pageData));
         }
 
         [HttpGet("{id}")]

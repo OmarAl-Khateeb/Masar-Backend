@@ -1,3 +1,4 @@
+using API.Errors;
 using Core.Entities.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +29,7 @@ namespace API.Controllers
                 })
                 .ToListAsync();
             
-            return Ok(users);
+            return Ok(new ApiResponse(200, users));
         }
 
         // [Authorize(Policy = "RequireAdminRole")]
@@ -53,7 +54,7 @@ namespace API.Controllers
 
             if (!result.Succeeded) return BadRequest("Failed to remove from roles");
 
-            return Ok(await _userManager.GetRolesAsync(user));
+            return Ok(new ApiResponse(200, await _userManager.GetRolesAsync(user)));
         }
 
         [Authorize(Policy = "ModeratePhotoRole")]

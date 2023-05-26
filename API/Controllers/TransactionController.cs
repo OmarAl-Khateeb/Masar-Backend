@@ -37,9 +37,10 @@ namespace API.Controllers
             var transactions = await _unitOfWork.Repository<Transaction>().ListAsync(spec);
 
             var data = _mapper.Map<IReadOnlyList<TransactionDto>>(transactions);
+            var pageData = new Pagination<TransactionDto>(transactionParams.PageIndex,
+                transactionParams.PageSize, totalItems, data);
 
-            return Ok(new Pagination<TransactionDto>(transactionParams.PageIndex,
-                transactionParams.PageSize, totalItems, data));
+            return Ok(new ApiResponse(200, pageData));
         }
 
         [HttpGet("{id}")]
@@ -49,7 +50,9 @@ namespace API.Controllers
 
             if (transaction == null) return NotFound(new ApiResponse(404));
 
-            return Ok(new ApiResponse(200, _mapper.Map<Transaction, TransactionDto>(transaction)));
+            var TransactionDto = _mapper.Map<Transaction, TransactionDto>(transaction);
+
+            return Ok(new ApiResponse(200, TransactionDto));
         }
 
         [HttpPost]
@@ -66,8 +69,10 @@ namespace API.Controllers
             var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Transaction"));
+            
+            var TransactionDto = _mapper.Map<Transaction, TransactionDto>(transaction);
 
-            return Created( "test", new ApiResponse(201,  _mapper.Map<Transaction, TransactionDto>(transaction)));
+            return Created( "test", new ApiResponse(201, TransactionDto));
         }
 
         [HttpPut("{id}")]
@@ -84,8 +89,10 @@ namespace API.Controllers
             var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Transaction"));
+            
+            var TransactionDto = _mapper.Map<Transaction, TransactionDto>(transaction);
 
-            return Ok(new ApiResponse(200, _mapper.Map<Transaction, TransactionDto>(transaction)));
+            return Ok(new ApiResponse(200, TransactionDto));
         }
 
         [HttpDelete("{id}")]
@@ -108,7 +115,10 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<TransactionTypeDto>>> GetransactionTypes()
         {
             var transactiontype = await _unitOfWork.Repository<TransactionType>().ListAllAsync();
-            return Ok(_mapper.Map<IReadOnlyList<TransactionType>, IReadOnlyList<TransactionTypeDto>>(transactiontype));
+
+            var transactiontypedto = _mapper.Map<IReadOnlyList<TransactionType>, IReadOnlyList<TransactionTypeDto>>(transactiontype);
+
+            return Ok(new ApiResponse(200, transactiontypedto));
         }
 
         [HttpPost("Types")]
@@ -122,7 +132,9 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Transaction"));
 
-            return Created("test", new ApiResponse(201,  _mapper.Map<TransactionType, TransactionTypeDto>(transactionType)));
+            var transactionTypeDto =  _mapper.Map<TransactionType, TransactionTypeDto>(transactionType);
+
+            return Created("test", new ApiResponse(201, transactionTypeDto));
         }
 
         [HttpDelete("Types{id}")]

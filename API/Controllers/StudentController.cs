@@ -64,28 +64,25 @@ namespace API.Controllers
 
             student.StudentStatus = StudentStatuses.Pending;
             
-            if (studentCDto.Photo != null)
-            {
-                var uploadFile = await _imageService.AddImageAsync(studentCDto.Photo, "students/photos");
+            if (studentCDto.Photo == null) return BadRequest(new ApiResponse(400, "Missing Student Photo"));
 
-                student.StudentPhotoUrl = uploadFile.SecureUrl.AbsoluteUri;
-            }// Photo Upload
+            var uploadFile = await _imageService.AddImageAsync(studentCDto.Photo, "students/photos");
+            student.StudentPhotoUrl = uploadFile.SecureUrl.AbsoluteUri;
             
-            if (studentCDto.IdCard != null) {
-                var IdCard = await _imageService.UploadDocumentAsync(studentCDto.IdCard, "students/documents");
-                IdCard.DocumentType="IDCard";
-            }
+            if (studentCDto.IdCard == null) return BadRequest(new ApiResponse(400, "Missing Student Id"));
+
+            var IdCard = await _imageService.UploadDocumentAsync(studentCDto.IdCard, "students/documents");
+            IdCard.DocumentType="IDCard";
             
-            if (studentCDto.AddressCard != null) {
-                var AddressCard = await _imageService.UploadDocumentAsync(studentCDto.AddressCard, "students/documents");
-                AddressCard.DocumentType="AddressCard";
-            }
+            if (studentCDto.AddressCard == null) return BadRequest(new ApiResponse(400, "Missing Student AddressCard"));
+
+            var AddressCard = await _imageService.UploadDocumentAsync(studentCDto.AddressCard, "students/documents");
+            AddressCard.DocumentType="AddressCard";
             
-            if (studentCDto.RationCard != null) {
-                var RationCard = await _imageService.UploadDocumentAsync(studentCDto.RationCard, "students/documents");
-                RationCard.DocumentType="RationCard";
-            }
-            //change this to false returns
+            if (studentCDto.RationCard == null) return BadRequest(new ApiResponse(400, "Missing Student AddressCard"));
+
+            var RationCard = await _imageService.UploadDocumentAsync(studentCDto.RationCard, "students/documents");
+            RationCard.DocumentType="RationCard";
 
             if (student.AdmissionType == (AdmissionTypes.Direct)) student.IsEvening = true;// evening student check
 

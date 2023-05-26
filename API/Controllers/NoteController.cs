@@ -49,7 +49,9 @@ namespace API.Controllers
 
             if (Note == null) return NotFound(new ApiResponse(404));
 
-            return Ok(new ApiResponse(200, _mapper.Map<Note, NoteDto>(Note)));
+            var NoteDto = _mapper.Map<Note, NoteDto>(Note);
+
+            return Ok(new ApiResponse(200, NoteDto));
         }
 
         
@@ -80,7 +82,9 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Creating Note"));
 
-            return Created("test", new ApiResponse(201, _mapper.Map<Note, NoteDto>(Note)));
+            var NoteDto = _mapper.Map<Note, NoteDto>(Note);
+
+            return Created("test", new ApiResponse(201, NoteDto));
         }
 
         [HttpPut("{id}")]
@@ -97,8 +101,10 @@ namespace API.Controllers
             var result = await _unitOfWork.Complete();
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem Updating Note"));
+            
+            var NoteDto = _mapper.Map<Note, NoteDto>(Note);
 
-            return Ok(new ApiResponse(200, _mapper.Map<Note, NoteDto>(Note)));
+            return Ok(new ApiResponse(200, NoteDto));
         }
 
         [HttpDelete("{id}")]

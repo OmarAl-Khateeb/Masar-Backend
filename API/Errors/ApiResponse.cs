@@ -17,6 +17,8 @@ namespace API.Errors
         {
             return statusCode switch
             {
+                200 => "Fulfiled, was the Request",
+                201 => "Created, was the Resource",
                 400 => "A bad request, you have made",
                 401 => "Authorized, you are not",
                 404 => "Resource found, it was not",
