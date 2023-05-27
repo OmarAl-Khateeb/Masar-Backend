@@ -18,6 +18,8 @@ namespace API.Helpers
             .ReverseMap();
 
             CreateMap<StudentCDto, Student>();
+                // .ForMember(d => d.AppUser.Id, o =>o.MapFrom(s => s.AppUserId))
+            // .ReverseMap();
             CreateMap<Student, StudentDto>()
                 // .ForMember(d => d.StudentPhotoUrl, o => o.MapFrom(s => s.StudentPhotoUrl))
             .ReverseMap();
@@ -48,6 +50,7 @@ namespace API.Helpers
             CreateMap<TransactionType, TransactionTypeDto>()
             .ReverseMap();
             CreateMap<TransactionCDto, Transaction>();
+            CreateMap<TransactionCUDto, Transaction>();
             CreateMap<Transaction, TransactionDto>()
                 .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
                 // .ForMember(d => d.DocumentUrl, o => o.MapFrom<ApiUrlResolver, string>(s => s.Document.DocumentUrl)) No longer need the resolver for cloudinary use

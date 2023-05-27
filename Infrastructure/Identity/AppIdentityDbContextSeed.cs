@@ -30,6 +30,7 @@ namespace Infrastructure.Identity
                     Address = "basmayah",
                     PhoneNumber = "77493829839",
                     DateOfBirth = DateTime.UtcNow.AddYears(-32),
+                    // StudentId = 1,
 
                 };
                 await userManager.CreateAsync(user, "Pa$$w0rd");
@@ -42,6 +43,7 @@ namespace Infrastructure.Identity
                     Address = "bob2@test.com",
                     PhoneNumber = "77493324432",
                     DateOfBirth = DateTime.UtcNow.AddYears(-32),
+                    // StudentId = 2,
                 };
 
                 await userManager.CreateAsync(user2, "Pa$$w0rd");
@@ -93,7 +95,7 @@ namespace Infrastructure.Identity
                         College = Colleges.Engineering,
                         Religion = Religions.Christian,
                         Nationalism = Nationalismes.Arabic,
-                        MartialStatus = MartialStatuses.Single
+                        MartialStatus = MartialStatuses.Single,
                     },
                     new Student
                     {

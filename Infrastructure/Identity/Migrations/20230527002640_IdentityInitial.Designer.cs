@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230524131602_IdentityInitial")]
+    [Migration("20230527002640_IdentityInitial")]
     partial class IdentityInitial
     {
         /// <inheritdoc />
@@ -460,6 +460,9 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<int?>("DocumentId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -496,9 +499,6 @@ namespace Infrastructure.Identity.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Index")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");

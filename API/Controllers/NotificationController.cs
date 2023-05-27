@@ -11,6 +11,7 @@ using Core.Entities;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,10 +22,12 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
+        private readonly INotificationService _notificationService;
         private readonly UserManager<AppUser> _userManager;
 
-        public NotificationController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService, UserManager<AppUser> userManager)
+        public NotificationController(IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService, IImageService imageService, UserManager<AppUser> userManager)
         {
+            _notificationService = notificationService;
             _userManager = userManager;
             _imageService = imageService;
             _unitOfWork = unitOfWork;
@@ -35,6 +38,8 @@ namespace API.Controllers
         public async Task<ActionResult<Pagination<NotificationDto>>> GetNotifications(
             [FromQuery] NotificationSpecParams NotificationParams)
         {
+
+            await _notificationService.CreateNotificationAsync();
             var spec = new NotificationSpecification(NotificationParams);
             var countSpec = new NotificationSpecification(NotificationParams);
 
@@ -58,6 +63,37 @@ namespace API.Controllers
 
             return Ok(new ApiResponse(200, NotificationDto));
         }
+
+        [Authorize]
+        [HttpGet("User")]//very not correct
+        public async Task<ActionResult<Pagination<NotificationDto>>> GetUserNotifications(
+            [FromQuery] BaseSpecParams BaseParams)
+        {
+            var user = await _userManager.FindUserByClaimsId(User);
+            var spec1 = new BaseSpecification<Student>(x=> x.AppUser.Id == user.Id);
+            var student = await _unitOfWork.Repository<Student>().GetEntityWithSpec(spec1);
+//maybe convert this to a claims extention
+            var NotificationParams = new NotificationSpecParams()
+            {
+                PageIndex = BaseParams.PageIndex,
+                PageSize = BaseParams.PageSize,
+                Sort = BaseParams.Sort,
+                Search = BaseParams.Search,
+                Stage = student.Stage,
+                Department = student.Department,
+            };
+            var spec = new NotificationSpecification(NotificationParams);
+            var countSpec = new NotificationSpecification(NotificationParams);
+
+            var totalItems = await _unitOfWork.Repository<Notification>().CountAsync(countSpec);
+            var Notifications = await _unitOfWork.Repository<Notification>().ListAsync(spec);
+
+            var data = _mapper.Map<IReadOnlyList<NotificationDto>>(Notifications);
+            var pageData = new Pagination<NotificationDto>(NotificationParams.PageIndex,
+                NotificationParams.PageSize, totalItems, data);
+            return Ok(new ApiResponse(200, pageData));
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<Notification>> CreateNotification([FromForm] NotificationCDto NotificationCDto)

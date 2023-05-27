@@ -29,4 +29,11 @@ namespace API.Dtos
         [SwaggerFileUpload]
         public IFormFile File { get; set; }
     }
+    public class TransactionCUDto
+    {
+        public int TypeId { get; set; } 
+        
+        [SwaggerFileUpload]
+        public IFormFile File { get; set; }
+    }
 }

@@ -8,7 +8,7 @@ namespace API.Extensions
 {
     public static class UserManagerExtensions
     {
-        public static async Task<AppUser> FindUserByClaimsPrincipleWithSubscription(this UserManager<AppUser> userManager, 
+        public static async Task<AppUser> FindUserByClaimsId(this UserManager<AppUser> userManager, 
             ClaimsPrincipal user)
         {
             var id = int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);

@@ -17,6 +17,16 @@ namespace Core.Specifications
             AddInclude(x => x.Document);
             
         }
+        public TransactionSpecification(TransactionSpecParams transactionParams, int Id)
+            : base(x => 
+            (!transactionParams.Type.HasValue || (int) x.TypeId == transactionParams.Type) &&
+            (!transactionParams.Status.HasValue || (int) x.Status == transactionParams.Status) &&
+            (x.StudentId == Id)
+            )
+        {
+            AddInclude(x => x.Document);
+            
+        }
 
         public TransactionSpecification(int id) : base(x => x.Id == id)
         {

@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindUserByClaimsPrincipleWithSubscription(User);
+            var user = await _userManager.FindUserByClaimsId(User);
 
             return _mapper.Map<AppUser, UserDto>(user);
         }

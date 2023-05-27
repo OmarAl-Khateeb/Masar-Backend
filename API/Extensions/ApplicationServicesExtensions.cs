@@ -1,7 +1,6 @@
 using API.Errors;
 using API.Helpers;
 using Core.Interfaces;
-using Infrastructue.Data;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +23,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>

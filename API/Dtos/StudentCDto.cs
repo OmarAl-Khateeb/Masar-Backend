@@ -38,6 +38,8 @@ namespace API.Dtos
         public Nationalismes Nationalism { get; set; }
         public MartialStatuses MartialStatus { get; set; }
         
+        public int AppUserId { get; set; }
+        
 
         [SwaggerFileUpload]
         [Required(ErrorMessage = "Please upload a file")]

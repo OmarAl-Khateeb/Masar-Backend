@@ -3,7 +3,7 @@ using Core.Entities;
 using Core.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructue.Data
+namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {

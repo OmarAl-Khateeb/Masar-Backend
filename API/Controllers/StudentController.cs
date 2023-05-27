@@ -4,12 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Extensions;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructue.Data;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static Core.Entities._Enums;
 
@@ -20,8 +24,10 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
-        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService)
+        private readonly UserManager<AppUser> _userManager;
+        public StudentController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService, UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
             _imageService = imageService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -51,6 +57,20 @@ namespace API.Controllers
         public async Task<ActionResult<StudentDto>> GetStudent(int id)
         {
             var student = await _unitOfWork.Repository<Student>().GetByIdAsync(id);
+
+            if (student == null) return NotFound(new ApiResponse(404));
+
+            return  Ok(new ApiResponse(200, _mapper.Map<Student, StudentDto>(student)));
+        }
+        
+        [Authorize]
+        [HttpGet("User")]
+        public async Task<ActionResult<StudentDto>> GetStudentByUser()
+        {
+            var user = await _userManager.FindUserByClaimsId(User);
+            var spec1 = new BaseSpecification<Student>(x=> x.AppUser.Id == user.Id);
+            
+            var student = await _unitOfWork.Repository<Student>().GetEntityWithSpec(spec1);
 
             if (student == null) return NotFound(new ApiResponse(404));
 
