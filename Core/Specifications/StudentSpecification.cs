@@ -13,6 +13,7 @@ namespace Core.Specifications
         {
             AddInclude(x => x.Documents);
             AddInclude(x => x.Activities);
+            AddInclude(x => x.Notes);
             AddOrderBy(x => x.FullName);
             ApplyPaging(studentParams.PageSize * (studentParams.PageIndex - 1),
                 studentParams.PageSize);
@@ -21,12 +22,12 @@ namespace Core.Specifications
             {
                 switch (studentParams.Sort)
                 {
-                    // case "priceAsc":
-                    //     AddOrderBy(p => p.Price);
+                    // case "stageeAsc":
+                    //     AddOrderBy(p => p.Stage);
                     //     break;
-                    // case "priceDekkkkkkksc":
-                    //     AddOrderByDescending(p => p.Price);
-                    //     break; figure out what methods later
+                    // case "stageDesc":
+                    //     AddOrderByDescending(p => p.Stage);
+                    //     break;
                     default:
                         AddOrderBy(n => n.FullName);
                         break;
@@ -38,6 +39,7 @@ namespace Core.Specifications
         {
             AddInclude(x => x.Documents);
             AddInclude(x => x.Activities);
+            AddInclude(x => x.Notes);
         }
     }
 }
