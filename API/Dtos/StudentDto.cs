@@ -29,16 +29,16 @@ namespace API.Dtos
         public bool IsEvening { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime RegisteredDate { get; set; }
-        public Genders Gender { get; set; }
-        public AdmissionTypes AdmissionType { get; set; }
-        public StudentTypes StudentType { get; set; }
-        public StudentStatuses StudentStatus { get; set; }
-        public Departments Department { get; set; }
-        public SchoolBranches SchoolBranch { get; set; }
-        public Colleges College { get; set; }
-        public Religions Religion { get; set; }
-        public Nationalismes Nationalism { get; set; }
-        public MartialStatuses MartialStatus { get; set; }
+        public string Gender { get; set; }
+        public string AdmissionType { get; set; }
+        public string StudentType { get; set; }
+        public string StudentStatus { get; set; }
+        public string Department { get; set; }
+        public string SchoolBranch { get; set; }
+        public string College { get; set; }
+        public string Religion { get; set; }
+        public string Nationalism { get; set; }
+        public string MartialStatus { get; set; }
         public List<DocumentDto> Documents { get; set; }
         public List<ActivityDto> Activities { get; set; }
         public List<NoteDto> Notes { get; set; }
