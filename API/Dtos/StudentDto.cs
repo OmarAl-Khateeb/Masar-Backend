@@ -17,7 +17,7 @@ namespace API.Dtos
         public string MotherFullName { get; set; }
         public string StudentPhotoUrl { get; set; }
         public string EmailAddress { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string BirthPlace { get; set; }
         public string SchoolName { get; set; }

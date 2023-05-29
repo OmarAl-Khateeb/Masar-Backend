@@ -20,7 +20,7 @@ namespace Core.Entities
         public string DirectorateName { get; set; }
         public string Nationality { get; set; }
         public string EmailAddress { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public int ExamNumber { get; set; }
         public int PrepTotal { get; set; }
         public int Stage { get; set; }
