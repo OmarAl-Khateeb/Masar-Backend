@@ -148,13 +148,15 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<TransactionDto>> UpdateTransaction(int id, TransactionCDto transactionCDto)
+        public async Task<ActionResult<TransactionDto>> UpdateTransaction(int id,[FromForm] TransactionUDto transactionUDto )
         {
             var transaction = await _unitOfWork.Repository<Transaction>().GetByIdAsync(id);
 
             if (transaction == null) return NotFound(new ApiResponse(404));
 
-            _mapper.Map<TransactionCDto, Transaction>(transactionCDto, transaction);
+            if (transactionUDto.File != null) transaction.Document = await _imageService.UploadDocumentAsync(transactionUDto.File, "students/documents");
+
+            _mapper.Map<TransactionUDto, Transaction>(transactionUDto, transaction);
 
             _unitOfWork.Repository<Transaction>().Update(transaction);
 

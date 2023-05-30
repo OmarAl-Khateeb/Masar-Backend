@@ -15,6 +15,9 @@ namespace Core.Specifications
             )
         {
             AddInclude(x => x.Document);
+            AddInclude(x => x.Roller);
+            AddInclude(x => x.Student);
+            AddInclude(x => x.Type);
             
         }
         public TransactionSpecification(TransactionSpecParams transactionParams, int Id)
@@ -25,12 +28,18 @@ namespace Core.Specifications
             )
         {
             AddInclude(x => x.Document);
+            AddInclude(x => x.Roller);
+            AddInclude(x => x.Student);
+            AddInclude(x => x.Type);
             
         }
 
         public TransactionSpecification(int id) : base(x => x.Id == id)
         {
             AddInclude(x => x.Document);
+            AddInclude(x => x.Roller);
+            AddInclude(x => x.Student);
+            AddInclude(x => x.Type);
         }
     }
 }

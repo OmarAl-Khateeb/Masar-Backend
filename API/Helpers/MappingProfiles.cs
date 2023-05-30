@@ -52,7 +52,8 @@ namespace API.Helpers
             CreateMap<TransactionCDto, Transaction>();
             CreateMap<TransactionCUDto, Transaction>();
             CreateMap<Transaction, TransactionDto>()
-                .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
+                .ForMember(d => d.StudentName, o => o.MapFrom(s => s.Student.FullName))
+                .ForMember(d => d.RollerName, o => o.MapFrom(s => s.Roller.FullName))
                 // .ForMember(d => d.DocumentUrl, o => o.MapFrom<ApiUrlResolver, string>(s => s.Document.DocumentUrl)) No longer need the resolver for cloudinary use
                 .ForMember(d => d.DocumentUrl, o => o.MapFrom(s => s.Document.DocumentUrl))
             .ReverseMap();

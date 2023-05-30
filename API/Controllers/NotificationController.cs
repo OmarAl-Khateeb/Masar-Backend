@@ -95,6 +95,7 @@ namespace API.Controllers
         }
 
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Notification>> CreateNotification([FromForm] NotificationCDto NotificationCDto)
         {

@@ -197,6 +197,7 @@ namespace Infrastructure.Identity.Migrations
                     DirectorateName = table.Column<string>(type: "text", nullable: true),
                     Nationality = table.Column<string>(type: "text", nullable: true),
                     EmailAddress = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     ExamNumber = table.Column<int>(type: "integer", nullable: false),
                     PrepTotal = table.Column<int>(type: "integer", nullable: false),
                     Stage = table.Column<int>(type: "integer", nullable: false),
@@ -375,7 +376,7 @@ namespace Infrastructure.Identity.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StudentId = table.Column<int>(type: "integer", nullable: false),
-                    RollerId = table.Column<string>(type: "text", nullable: true),
+                    RollerId = table.Column<int>(type: "integer", nullable: false),
                     DocumentId = table.Column<int>(type: "integer", nullable: true),
                     TypeId = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -386,6 +387,12 @@ namespace Infrastructure.Identity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_AspNetUsers_RollerId",
+                        column: x => x.RollerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_Documents_DocumentId",
                         column: x => x.DocumentId,
@@ -491,6 +498,11 @@ namespace Infrastructure.Identity.Migrations
                 name: "IX_Transactions_DocumentId",
                 table: "Transactions",
                 column: "DocumentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_RollerId",
+                table: "Transactions",
+                column: "RollerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_StudentId",

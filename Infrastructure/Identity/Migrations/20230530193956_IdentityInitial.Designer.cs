@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230527002640_IdentityInitial")]
+    [Migration("20230530193956_IdentityInitial")]
     partial class IdentityInitial
     {
         /// <inheritdoc />
@@ -409,6 +409,9 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<string>("Nationality")
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
                     b.Property<double>("PrepAverage")
                         .HasColumnType("double precision");
 
@@ -466,8 +469,8 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("RollerId")
-                        .HasColumnType("text");
+                    b.Property<int>("RollerId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -481,6 +484,8 @@ namespace Infrastructure.Identity.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentId");
+
+                    b.HasIndex("RollerId");
 
                     b.HasIndex("StudentId");
 
@@ -705,6 +710,12 @@ namespace Infrastructure.Identity.Migrations
                         .WithMany()
                         .HasForeignKey("DocumentId");
 
+                    b.HasOne("Core.Entities.Identity.AppUser", "Roller")
+                        .WithMany()
+                        .HasForeignKey("RollerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Entities.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
@@ -718,6 +729,8 @@ namespace Infrastructure.Identity.Migrations
                         .IsRequired();
 
                     b.Navigation("Document");
+
+                    b.Navigation("Roller");
 
                     b.Navigation("Student");
 
