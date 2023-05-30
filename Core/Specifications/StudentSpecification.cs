@@ -11,9 +11,18 @@ namespace Core.Specifications
             (!studentParams.Department.HasValue || x.Department == studentParams.Department)
             )
         {
-            AddInclude(x => x.Documents);
-            AddInclude(x => x.Activities);
-            AddInclude(x => x.Notes);
+            AddInclude(x => x.Documents
+                .Where(e => !(e.IsDeleted))
+                .OrderByDescending(e => e.CreatedDate)
+                );
+            AddInclude(x => x.Activities
+                .Where(e => !(e.IsDeleted))
+                .OrderByDescending(e => e.CreatedDate)
+                );
+            AddInclude(x => x.Notes
+                .Where(e => !(e.IsDeleted))
+                .OrderBy(e => e.Id)
+                );
             AddOrderBy(x => x.FullName);
             ApplyPaging(studentParams.PageSize * (studentParams.PageIndex - 1),
                 studentParams.PageSize);
@@ -37,9 +46,18 @@ namespace Core.Specifications
 
         public StudentSpecification(int id) : base(x => x.Id == id)
         {
-            AddInclude(x => x.Documents);
-            AddInclude(x => x.Activities);
-            AddInclude(x => x.Notes);
+            AddInclude(x => x.Documents
+                .Where(e => !(e.IsDeleted))
+                .OrderByDescending(e => e.CreatedDate)
+                );
+            AddInclude(x => x.Activities
+                .Where(e => !(e.IsDeleted))
+                .OrderByDescending(e => e.CreatedDate)
+                );
+            AddInclude(x => x.Notes
+                .Where(e => !(e.IsDeleted))
+                .OrderBy(e => e.Id)
+                );
         }
     }
 }
