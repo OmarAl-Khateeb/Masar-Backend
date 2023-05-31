@@ -15,11 +15,13 @@ namespace Core.Specifications
             )
         {
             AddInclude(x => x.Documents.OrderBy(x=> x.Id));
+            AddInclude(x => x.Student);
         }
 
         public ActivitySpecification(int id) : base(x => x.Id == id)
         {
             AddInclude(x => x.Documents.OrderBy(x=> x.Id));
+            AddInclude(x => x.Student);
         }
     }
 }

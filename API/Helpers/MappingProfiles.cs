@@ -42,8 +42,8 @@ namespace API.Helpers
 
             CreateMap<ActivityCDto, Activity>();
             CreateMap<Activity, ActivityDto>()
-                .ForMember(d => d.StudentId, o => o.MapFrom(s => s.StudentId))
-                // .ForMember(d => d.Documents, o => o.MapFrom(s => s.Documents))
+                .ForMember(d => d.StudentName, o => o.MapFrom(s => s.Student.FullName))
+                .ForMember(d => d.Documents, o => o.MapFrom(s => s.Documents))
             .ReverseMap();
 
             CreateMap<TransactionTypeCDto, TransactionType>();

@@ -13,12 +13,13 @@ namespace API.Dtos
         public DateTime CreatedDate { get; set; }
         public string Name { get; set; }
         public string ActivityType { get; set; }
-        public int StudentId { get; set; }
+        public string StudentName { get; set; }
         public string Note { get; set; }
         public string Tags { get; set; }
+
+        // public string Status { get; set; }
         public DateTime DeadLine { get; set; }
         public List<DocumentDto> Documents { get; set; }
-        public Statuses Status { get; set; }
         
     }
     
@@ -30,7 +31,7 @@ namespace API.Dtos
         public string Note { get; set; }
         public string Tags { get; set; }
         public DateTime DeadLine { get; set; }
-        public Statuses Status { get; set; }
+        // public Statuses Status { get; set; }
         
         [SwaggerFileUpload]
         public List<IFormFile> Files { get; set; }
