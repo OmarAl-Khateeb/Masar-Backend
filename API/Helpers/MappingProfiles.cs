@@ -51,6 +51,7 @@ namespace API.Helpers
             .ReverseMap();
             CreateMap<TransactionCDto, Transaction>();
             CreateMap<TransactionCUDto, Transaction>();
+            CreateMap<TransactionUDto, Transaction>();
             CreateMap<Transaction, TransactionDto>()
                 .ForMember(d => d.StudentName, o => o.MapFrom(s => s.Student.FullName))
                 .ForMember(d => d.RollerName, o => o.MapFrom(s => s.Roller.FullName))
