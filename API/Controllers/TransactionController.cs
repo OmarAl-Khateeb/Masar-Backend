@@ -211,7 +211,7 @@ namespace API.Controllers
             return Created("test", new ApiResponse(201, transactionTypeDto));
         }
 
-        [HttpDelete("Types{id}")]
+        [HttpDelete("Types/{id}")]
         public async Task<ActionResult> DeleteTypeTransaction(int id)
         {
             var transactionType = await _unitOfWork.Repository<TransactionType>().GetByIdAsync(id);
