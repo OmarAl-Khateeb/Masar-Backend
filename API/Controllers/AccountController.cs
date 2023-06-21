@@ -63,7 +63,7 @@ namespace API.Controllers
                 FullName = registerDto.FullName,
                 Email = registerDto.Email,
                 UserName = registerDto.Email,
-                DateOfBirth = DateTime.Today.AddYears(-30),
+                DateOfBirth = DateTime.UtcNow.AddYears(-30),
                 //temporary
             };
 
